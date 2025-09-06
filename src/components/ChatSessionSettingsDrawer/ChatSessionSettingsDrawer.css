@@ -1,0 +1,108 @@
+/* src/components/ChatSessionSettingsDrawer/ChatSessionSettingsDrawer.css */
+
+/* Backdrop (covers whole screen, dark translucent) */
+.session-settings-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1200;               /* above everything else */
+  display: flex;
+  justify-content: flex-end;   /* drawer slides in from the right */
+}
+
+/* Drawer panel – default style */
+.session-settings-drawer {
+  background: #fff;
+  width: 640px;
+  max-width: 90%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.15);
+}
+
+/* -------------------------------------------------
+   Animation classes
+   ------------------------------------------------- */
+.session-settings-drawer.opening {
+  animation: slideInRight 0.22s ease-out forwards;
+}
+.session-settings-drawer.closing {
+  animation: slideOutRight 0.22s ease-out forwards;
+}
+
+/* Slide‑in (already used) */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* New slide‑out animation */
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* Header (title + close button) */
+.session-settings-header {
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.session-settings-header h1 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #666;
+}
+.close-btn:hover {
+  color: #333;
+}
+
+/* Main content – scrollable */
+.session-settings-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+/* Section titles */
+.settings-section {
+  margin-bottom: 1.5rem;
+}
+.section-title {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Optional styling for the button that opens the drawer (from NavPane) */
+.session-settings-btn {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0.4rem 0;
+  margin-top: 0.6rem;
+}
+.session-settings-btn:hover {
+  text-decoration: underline;
+}
+

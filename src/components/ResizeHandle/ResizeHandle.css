@@ -1,0 +1,70 @@
+/*
+.resize-handle {
+  width: 10px;
+  background: #f0f0f0;
+  cursor: col-resize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+  transition: background-color 0.2s;
+}
+
+.resize-handle:hover,
+.resize-handle.resizing {
+  background: #d0d0d0;
+}
+
+.resize-indicator {
+  width: 2px;
+  height: 40px;
+  background: #999;
+  border-radius: 1px;
+}
+*/
+
+/* Resize Handle */
+.resize-handle {
+  width: 10px;
+  background-color: #fff;
+  cursor: col-resize;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+}
+
+.resize-handle:hover {
+  background-color: #fff;
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+}
+
+.resize-handle.resizing {
+  background-color: #fff;
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+}
+
+.resize-indicator {
+  width: 2px;
+  height: 60%;
+  background-color: #999;
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.resize-handle:hover .resize-indicator,
+.resize-handle.resizing .resize-indicator {
+  opacity: 0.7;
+}
+
+.resize-handle.resizing .resize-indicator {
+  background-color: white;
+}
+
+

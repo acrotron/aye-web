@@ -1,3 +1,26 @@
+# Custom
+1
+2
+3
+
+scp_publish.sh
+
+.venv
+
+**/*.zip
+**/*.log
+**/*.bak
+**/*.orig
+**/*.swp
+**/__pycache__
+**/tmp
+**/bak
+test
+python
+
+nohup*
+
+
 # Angular specific
 /dist/
 /out-tsc/

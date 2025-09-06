@@ -1,0 +1,42 @@
+/* src/components/Settings/Settings.css */
+
+.settings-view {
+  position: absolute;          /* cover the whole app container */
+  inset: 0;                     /* top/right/bottom/left = 0 */
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* header with title + close button */
+.settings-header {
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9f9f9;
+}
+
+/* simple back button */
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #007bff;
+  padding: 0.25rem 0.5rem;
+}
+.close-btn:hover {
+  text-decoration: underline;
+}
+
+/* placeholder content area – scroll if it grows */
+.settings-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
