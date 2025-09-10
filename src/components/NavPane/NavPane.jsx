@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useChatContext } from "../../context/ChatContext";
 import { ProfileMenu } from "../../components/ProfileMenu/ProfileMenu";
 import ChatSessionSettingsDrawer from "../ChatSessionSettingsDrawer/ChatSessionSettingsDrawer";
+import { IoCogOutline } from "react-icons/io5";
 
 import "./NavPane.css";
 
@@ -80,8 +81,18 @@ const NavPane = ({ title }) => {
           onClick={() => setShowChatSettings(true)}
           title="Chat session settings"
         >
-          ⚙️ Model and System Prompt
-        </button>
+        ⛭ Model and System Prompt
+        </button> 
+        {/*  */}
+       {/*   
+        <button
+          className="profile-item-btn"
+          onClick={() => setShowChatSettings(true)}
+          title="Chat session settings"
+        >
+          <IoCogOutline className="profile-item-icon" aria-hidden="true" />
+          <span className="profile-item-text">Model and System Prompt</span>
+        </button> */}
 
         <hr />
 

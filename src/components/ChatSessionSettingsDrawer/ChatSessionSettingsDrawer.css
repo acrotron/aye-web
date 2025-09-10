@@ -101,6 +101,7 @@
   font-size: 0.9rem;
   padding: 0.4rem 0;
   margin-top: 0.6rem;
+  margin-left: 1.0rem;
 }
 .session-settings-btn:hover {
   text-decoration: underline;
