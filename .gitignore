@@ -20,6 +20,9 @@ python
 
 nohup*
 
+.aye
+.ayeignore
+
 
 # Angular specific
 /dist/

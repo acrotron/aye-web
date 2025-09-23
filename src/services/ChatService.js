@@ -31,6 +31,15 @@ export class ChatService {
     }
   }
 
+  async getToken(userId) {
+    try {
+      return await this.hfService.getToken(userId);
+    } catch (error) {
+      console.error('Failed to send message:', error);
+      throw error;
+    }
+  }
+
   async deleteSession(userId, chatId) {
     try {
       // Assuming the HF service has a delete method
