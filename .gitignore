@@ -4,6 +4,7 @@
 3
 
 scp_publish.sh
+s3_publish.sh
 
 .venv
 
