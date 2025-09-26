@@ -220,14 +220,15 @@ export const useMessages = (
         // 5️⃣ Call the backend / LLM service with the selected model and system prompt
         // ---------------------------------------------------------
         const chatId = currentSessionId ?? -1;
-        const response = await chatService.sendMessage(
-          currentUserId,
-          chatId,
-          txt,
-          selectedModel, // Pass the selected model to the service
-          systemPrompt   // Pass the system prompt to the service
-        );
+        //const response = await chatService.sendMessage(
+        //  currentUserId,
+        //  chatId,
+        //  txt,
+        //  selectedModel, // Pass the selected model to the service
+        //  systemPrompt   // Pass the system prompt to the service
+        //);
 
+          const response = await chatService.sendDummyMessage();
         // ---------------------------------------------------------
         // 6️⃣ Let the backend update any session‑level fields
         // ---------------------------------------------------------

@@ -31,6 +31,11 @@ export class ChatService {
     }
   }
 
+  async sendDummyMessage() {
+      const dummyMessage = JSON.parse('{"user_id": "amayorskiy@acrotron.com","chat_id": 135,"chat_title": "C Code for a Pokemon Game","assistant_response": "```c\\n#include <stdio.h>\\n\\nint main(void) {\\n    printf("Hello, World!\\n");\\n    return 0;\\n}\\n```","created_at": "2025-09-08 14:31:02+00:00","updated_at": "2025-09-26 18:27:31+00:00"}');
+      return dummyMessage.JSON()
+    }
+
   async deleteSession(userId, chatId) {
     try {
       // Assuming the HF service has a delete method
