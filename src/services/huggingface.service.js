@@ -49,5 +49,16 @@ export class HuggingfaceService {
       throw error;
     }
   }
+
+  async getToken(userId) {
+    try {
+      const response = await api.post(`${this.apiUrl}/token`, {
+        user_id: userId
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error(`Failed to fetch token: ${error.message}`);
+    }
+  }
 }
 
