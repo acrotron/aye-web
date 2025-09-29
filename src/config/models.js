@@ -3,6 +3,7 @@
 export const AVAILABLE_MODELS = [
     { id: 'openai/gpt-oss-120b', name: 'GPT OSS 120b' },
     { id: 'meta-llama/Llama-4-Maverick-17B-128E-Instruct', name: 'LLaMa-4-Maverick-Instruct' },
+    { id: 'Qwen/Qwen3-Coder-480B-A35B-Instruct', name: 'Qwen3-Coder-480B-A35B-Instruct' },
 /*
     { id: 'openai/gpt-oss-20b', name: 'GPT OSS 20b' },
   { 

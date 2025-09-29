@@ -1,30 +1,41 @@
-//src/components/Settings/Settings.jsx
-
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import "./Settings.css";
+// src/components/Settings/Settings.jsx
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import DeveloperSettings from './DeveloperSettings';
+import './Settings.css';
 
 const Settings = () => {
   const navigate = useNavigate();
+  const [activeSection, setActiveSection] = useState('developer');
 
   return (
+    <div className="settings-view">
+      <header className="settings-header">
+        <h1>Settings</h1>
+        <button className="close-btn" onClick={() => navigate(-1)}>
+          ← Back
+        </button>
+      </header>
 
-  <div className="settings-view">
-    <header className="settings-header">
-      <h1>Settings</h1>
-      {/* a simple “Back” button – you can replace it with an icon later */}
-      <button className="close-btn" onClick={() => navigate(-1)}>
-        ← Back
-      </button>
-    </header>
+      <div className="settings-container">
+        {/* Navigation pane on the left */}
+        <nav className="settings-nav">
+          <button 
+            className={`nav-item ${activeSection === 'developer' ? 'active' : ''}`}
+            onClick={() => setActiveSection('developer')}
+          >
+            Developer Settings
+          </button>
+          {/* Add more navigation items here as needed */}
+        </nav>
 
-    <main className="settings-content">
-      {/* Placeholder – put real settings UI here later */}
-      <p>This is where you will add your settings controls.</p>
-    </main>
-  </div>
+        {/* Main content area on the right */}
+        <main className="settings-content">
+          {activeSection === 'developer' && <DeveloperSettings />}
+        </main>
+      </div>
+    </div>
   );
-}
+};
 
 export default Settings;
-

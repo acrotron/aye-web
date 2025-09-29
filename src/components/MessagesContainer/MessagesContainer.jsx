@@ -24,4 +24,3 @@ const MessagesContainer = () => {
 };
 
 export default MessagesContainer;
-
