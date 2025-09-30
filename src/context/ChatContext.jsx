@@ -37,6 +37,7 @@ Keep the tone professional and neutral and to the point.`;
   const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL);
   const [systemPrompt, setSystemPrompt]   = useState(defaultSystemPrompt);
   const [showSettings, setShowSettings]   = useState(false);
+  const [activeSettingsSection, setActiveSettingsSection] = useState('model');
 
   // -----------------------------------------------------------------
   // Core chat data (sessions, messages, etc.)
@@ -155,6 +156,8 @@ Keep the tone professional and neutral and to the point.`;
     selectedModel,
     showSettings,
     setShowSettings,
+    activeSettingsSection,
+    setActiveSettingsSection
   };
 
   return (
@@ -171,4 +174,3 @@ export const useChatContext = () => {
   }
   return ctx;
 };
-

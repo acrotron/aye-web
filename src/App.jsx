@@ -8,7 +8,6 @@ import { ChatService } from './services/ChatService';
 import { HuggingfaceService } from './services/huggingface.service';
 import { useResizablePanes } from './hooks/useResizablePanes';
 import AppContent from './components/AppContent';
-import Settings from './components/Settings/Settings';
 
 import './app.css';
 
@@ -21,7 +20,6 @@ function App({ user, signOut }) {
     <Authenticator>
       {({ signOut, user }) => (
         <ChatProvider user={user} signOut={signOut} chatService={chatService.current}>
-
           <Routes>
             {/* Chat UI */}
             <Route
@@ -36,11 +34,8 @@ function App({ user, signOut }) {
               }
             />
 
-            {/* Settings UI – the component handles its own “Back” button */}
-            <Route path="/settings" element={<Settings />} />
+            {/* Settings route removed - now handled by sliding drawer */}
           </Routes>
-
-
         </ChatProvider>
       )}
     </Authenticator>
@@ -48,4 +43,3 @@ function App({ user, signOut }) {
 }
 
 export default App;
-
