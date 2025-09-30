@@ -3,7 +3,7 @@
 import { IoExitOutline, IoCogOutline } from "react-icons/io5";
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useChatContext } from '../../context/ChatContext';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';  // Removed navigation import
 import './ProfileMenu.css';
 
 
@@ -13,8 +13,8 @@ export const ProfileMenu = () => {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
   //  ── Data coming from your ChatProvider (or any auth source) ──
-  const { currentUserId, user, signOut } = useChatContext();
-  const navigate = useNavigate();
+  const { currentUserId, user, signOut, setShowSettings, setActiveSettingsSection } = useChatContext();
+  // const navigate = useNavigate();  // Removed navigation hook
 
   //  ── Helpers ───────────────────────────────────────
   const toggle = () => setExpanded((prev) => !prev);
@@ -35,7 +35,7 @@ export const ProfileMenu = () => {
         !wrapperRef.current.contains(event.target)
       ) {
         setExpanded(false);
-        toggleBtnRef.current?.focus();
+        // toggleBtnRef.current?.focus();  // Commented out unused reference
       }
     },
     [expanded]
@@ -46,7 +46,7 @@ export const ProfileMenu = () => {
     (event) => {
       if (expanded && event.key === 'Escape') {
         setExpanded(false);
-        toggleBtnRef.current?.focus();
+        // toggleBtnRef.current?.focus();  // Commented out unused reference
       }
     },
     [expanded]
@@ -96,8 +96,15 @@ return (
       <div className="profile-panel">
         <div className="profile-username">{currentUserId ?? 'Guest'}</div>
 
-        {/* Settings button */}
-        <button className="profile-item-btn" onClick={() => navigate('/settings')}>
+        {/* Settings button - now opens slideout drawer */}
+        <button 
+          className="profile-item-btn" 
+          onClick={() => {
+            setActiveSettingsSection('developer');
+            setShowSettings(true);
+            setExpanded(false);
+          }}
+        >
           <IoCogOutline className="profile-item-icon" aria-hidden="true" />
           <span className="profile-item-text">Settings</span>
         </button>
@@ -111,4 +118,3 @@ return (
   </div>
 );
 };
-
