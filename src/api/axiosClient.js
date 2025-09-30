@@ -1,4 +1,3 @@
-// src/api/axiosClient.js
 import axios from "axios";
 import { environment } from '../environments/environment';
 import { getAuthToken } from "../auth/getAuthToken";

@@ -1,4 +1,3 @@
-// src/App.jsx
 import React, { useRef } from 'react';
 import { Authenticator } from '@aws-amplify/ui-react';
 import { Routes, Route } from 'react-router-dom';

@@ -1,4 +1,3 @@
-// src/components/Settings/DeveloperSettings.jsx
 import React, { useState } from 'react';
 import { usePersonalToken } from '../../hooks/usePersonalToken';
 

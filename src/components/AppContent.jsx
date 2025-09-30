@@ -1,4 +1,3 @@
-// src/components/AppContent.jsx
 import React from "react";
 import { useChatContext } from "../context/ChatContext";
 

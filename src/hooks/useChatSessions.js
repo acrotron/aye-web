@@ -1,4 +1,3 @@
-// src/hooks/useChatSessions.js
 import { useState, useEffect, useCallback } from "react";
 
 export const useChatSessions = (chatService, currentUserId, systemPrompt) => {

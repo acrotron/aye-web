@@ -1,4 +1,3 @@
-// src/context/ChatContext.jsx
 import React, {
   createContext,
   useContext,

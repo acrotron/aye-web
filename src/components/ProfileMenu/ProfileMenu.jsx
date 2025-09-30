@@ -1,5 +1,3 @@
-// src/components/ProfileMenu/ProfileMenu.jsx
-
 // Ion Icons set: https://ionic.io/ionicons
 // installed with: npm install react-icons
 import { IoExitOutline, IoCogOutline } from "react-icons/io5";

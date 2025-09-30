@@ -1,5 +1,3 @@
-// src/hooks/useMessages.js
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { marked } from 'marked';
 import { truncateText } from '../utils/helpers';

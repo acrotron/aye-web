@@ -1,4 +1,3 @@
-// src/components/ChatSessionSettingsDrawer/ChatSessionSettingsDrawer.jsx
 import React, { useState, useEffect } from "react";
 import { useChatContext } from "../../context/ChatContext";
 import ModelSelector from "../ModelSelector/ModelSelector";
@@ -95,30 +94,32 @@ const ChatSessionSettingsDrawer = ({ onClose, initialSection = 'model' }) => {
           </button>
         </header>
 
-        <nav className="settings-nav">
-          <button 
-            className={`nav-item ${currentSection === 'model' ? 'active' : ''}`}
-            onClick={() => setCurrentSection('model')}
-          >
-            Model Settings
-          </button>
-          <button 
-            className={`nav-item ${currentSection === 'prompt' ? 'active' : ''}`}
-            onClick={() => setCurrentSection('prompt')}
-          >
-            System Prompt
-          </button>
-          <button 
-            className={`nav-item ${currentSection === 'developer' ? 'active' : ''}`}
-            onClick={() => setCurrentSection('developer')}
-          >
-            Developer Settings
-          </button>
-        </nav>
+        <div className="session-settings-content">
+          <nav className="settings-nav">
+            <button 
+              className={`nav-item ${currentSection === 'model' ? 'active' : ''}`}
+              onClick={() => setCurrentSection('model')}
+            >
+              Model Settings
+            </button>
+            <button 
+              className={`nav-item ${currentSection === 'prompt' ? 'active' : ''}`}
+              onClick={() => setCurrentSection('prompt')}
+            >
+              System Prompt
+            </button>
+            <button 
+              className={`nav-item ${currentSection === 'developer' ? 'active' : ''}`}
+              onClick={() => setCurrentSection('developer')}
+            >
+              Developer Settings
+            </button>
+          </nav>
 
-        <main className="session-settings-content">
-          {renderSection()}
-        </main>
+          <main>
+            {renderSection()}
+          </main>
+        </div>
       </div>
     </div>
   );
