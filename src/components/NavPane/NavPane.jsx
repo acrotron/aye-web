@@ -78,13 +78,13 @@ const NavPane = ({ title }) => {
       </header>
 
       <div className="nav-content">
-        {/* ---- always‑visible sessions ---- */}
+        {/* ---- always-visible sessions ---- */}
         {visibleSessions.map(renderSession)}
 
-        {/* ----- New button that opens the session‑settings drawer ----- */}
+        {/* ----- New button that opens the session-settings drawer ----- */}
         <button
           className="session-settings-btn"
-          onClick={() => openSettingsSection('model')}
+          onClick={() => openSettingsSection('currentChat')}
           title="Chat session settings"
         >
         ⛭ Model and System Prompt

@@ -8,7 +8,7 @@ import "./ChatSessionSettingsDrawer.css";
 
 const ANIMATION_DURATION = 220; // ms – must match the CSS animation time
 
-const ChatSessionSettingsDrawer = ({ onClose, initialSection = 'model' }) => {
+const ChatSessionSettingsDrawer = ({ onClose, initialSection = 'currentChat' }) => {
   const {
     selectedModel,
     setSelectedModel,
@@ -44,26 +44,25 @@ const ChatSessionSettingsDrawer = ({ onClose, initialSection = 'model' }) => {
 
   const renderSection = () => {
     switch (currentSection) {
-      case 'model':
+      case 'currentChat':
         return (
-          <section className="settings-section">
-            <h2 className="section-title">Model</h2>
-            <ModelSelector
-              selectedModel={selectedModel}
-              onModelChange={setSelectedModel}
-              availableModels={AVAILABLE_MODELS}
-            />
-          </section>
-        );
-      case 'prompt':
-        return (
-          <section className="settings-section">
-            <h2 className="section-title">System Prompt</h2>
-            <SystemPromptEditor
-              systemPrompt={systemPrompt}
-              onSystemPromptChange={setSystemPrompt}
-            />
-          </section>
+          <>
+            <section className="settings-section">
+              <h2 className="section-title">Model</h2>
+              <ModelSelector
+                selectedModel={selectedModel}
+                onModelChange={setSelectedModel}
+                availableModels={AVAILABLE_MODELS}
+              />
+            </section>
+            <section className="settings-section">
+              <h2 className="section-title">System Prompt</h2>
+              <SystemPromptEditor
+                systemPrompt={systemPrompt}
+                onSystemPromptChange={setSystemPrompt}
+              />
+            </section>
+          </>
         );
       case 'developer':
         return (
@@ -97,16 +96,10 @@ const ChatSessionSettingsDrawer = ({ onClose, initialSection = 'model' }) => {
         <div className="session-settings-content">
           <nav className="settings-nav">
             <button 
-              className={`nav-item ${currentSection === 'model' ? 'active' : ''}`}
-              onClick={() => setCurrentSection('model')}
+              className={`nav-item ${currentSection === 'currentChat' ? 'active' : ''}`}
+              onClick={() => setCurrentSection('currentChat')}
             >
-              Model Settings
-            </button>
-            <button 
-              className={`nav-item ${currentSection === 'prompt' ? 'active' : ''}`}
-              onClick={() => setCurrentSection('prompt')}
-            >
-              System Prompt
+              Current Chat
             </button>
             <button 
               className={`nav-item ${currentSection === 'developer' ? 'active' : ''}`}
