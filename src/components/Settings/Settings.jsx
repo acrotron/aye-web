@@ -1,4 +1,3 @@
-// src/components/Settings/Settings.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DeveloperSettings from './DeveloperSettings';

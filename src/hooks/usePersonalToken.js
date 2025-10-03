@@ -1,4 +1,3 @@
-// src/hooks/usePersonalToken.js
 import { useState, useCallback } from 'react';
 import { ChatService } from '../services/ChatService';
 import { HuggingfaceService } from '../services/huggingface.service';

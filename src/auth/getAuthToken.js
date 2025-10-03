@@ -1,4 +1,3 @@
-// src/auth/getAuthToken.js
 //import { Auth } from "aws-amplify";
 //import { Auth } from '@aws-amplify/auth';
 import { fetchAuthSession } from 'aws-amplify/auth';

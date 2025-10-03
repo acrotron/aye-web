@@ -1,14 +1,14 @@
-// src/components/ChatSessionSettingsDrawer/ChatSessionSettingsDrawer.jsx
 import React, { useState, useEffect } from "react";
 import { useChatContext } from "../../context/ChatContext";
 import ModelSelector from "../ModelSelector/ModelSelector";
 import SystemPromptEditor from "../SystemPromptEditor/SystemPromptEditor";
+import DeveloperSettings from "../Settings/DeveloperSettings";
 import { AVAILABLE_MODELS } from "../../config/models";
 import "./ChatSessionSettingsDrawer.css";
 
 const ANIMATION_DURATION = 220; // ms – must match the CSS animation time
 
-const ChatSessionSettingsDrawer = ({ onClose }) => {
+const ChatSessionSettingsDrawer = ({ onClose, initialSection = 'currentChat' }) => {
   const {
     selectedModel,
     setSelectedModel,
@@ -20,6 +20,7 @@ const ChatSessionSettingsDrawer = ({ onClose }) => {
   // 1️⃣ Closing state – true while the slide‑out runs
   // -----------------------------------------------
   const [isClosing, setIsClosing] = useState(false);
+  const [currentSection, setCurrentSection] = useState(initialSection);
 
   // -------------------------------------------------
   // Close handler – start the slide‑out animation,
@@ -41,6 +42,40 @@ const ChatSessionSettingsDrawer = ({ onClose }) => {
   // Prevent clicks inside the drawer from bubbling up to the backdrop.
   const stopPropagation = (e) => e.stopPropagation();
 
+  const renderSection = () => {
+    switch (currentSection) {
+      case 'currentChat':
+        return (
+          <>
+            <section className="settings-section">
+              <h2 className="section-title">Model</h2>
+              <ModelSelector
+                selectedModel={selectedModel}
+                onModelChange={setSelectedModel}
+                availableModels={AVAILABLE_MODELS}
+              />
+            </section>
+            <section className="settings-section">
+              <h2 className="section-title">System Prompt</h2>
+              <SystemPromptEditor
+                systemPrompt={systemPrompt}
+                onSystemPromptChange={setSystemPrompt}
+              />
+            </section>
+          </>
+        );
+      case 'developer':
+        return (
+          <section className="settings-section">
+            <h2 className="section-title">Developer Settings</h2>
+            <DeveloperSettings />
+          </section>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     // Backdrop – click outside the drawer triggers the close animation
     <div className="session-settings-backdrop" onClick={handleClose}>
@@ -52,36 +87,35 @@ const ChatSessionSettingsDrawer = ({ onClose }) => {
         onClick={stopPropagation}
       >
         <header className="session-settings-header">
-          <h1>Chat Session Settings</h1>
+          <h1>Settings</h1>
           <button className="close-btn" onClick={handleClose}>
             ✕
           </button>
         </header>
 
-        <main className="session-settings-content">
-          {/* Model selector */}
-          <section className="settings-section">
-            <h2 className="section-title">Model</h2>
-            <ModelSelector
-              selectedModel={selectedModel}
-              onModelChange={setSelectedModel}
-              availableModels={AVAILABLE_MODELS}
-            />
-          </section>
+        <div className="session-settings-content">
+          <nav className="settings-nav">
+            <button 
+              className={`nav-item ${currentSection === 'currentChat' ? 'active' : ''}`}
+              onClick={() => setCurrentSection('currentChat')}
+            >
+              Current Chat
+            </button>
+            <button 
+              className={`nav-item ${currentSection === 'developer' ? 'active' : ''}`}
+              onClick={() => setCurrentSection('developer')}
+            >
+              Developer Settings
+            </button>
+          </nav>
 
-          {/* System Prompt editor */}
-          <section className="settings-section">
-            <h2 className="section-title">System Prompt</h2>
-            <SystemPromptEditor
-              systemPrompt={systemPrompt}
-              onSystemPromptChange={setSystemPrompt}
-            />
-          </section>
-        </main>
+          <main>
+            {renderSection()}
+          </main>
+        </div>
       </div>
     </div>
   );
 };
 
 export default ChatSessionSettingsDrawer;
-
