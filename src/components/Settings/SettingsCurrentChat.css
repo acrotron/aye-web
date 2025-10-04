@@ -1,0 +1,15 @@
+/* components/Settings/SettingsCurrentChat.css */
+
+.settings-current-chat {
+  padding: 1rem;
+  max-width: 600px;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .settings-current-chat {
+    padding: 0.5rem;
+  }
+}
