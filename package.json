@@ -1,13 +1,21 @@
 {
   "name": "chat-app",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --mode dev",
+    "build:dev": "vite build --mode dev",
+    "build:olddev": "vite build --mode olddev",
+    "build:prod": "vite build --mode prod",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview:dev": "vite preview --mode dev",
+    "preview:olddev": "vite preview --mode olddev",
+    "preview:prod": "vite preview --mode prod",
+    "publish": "source ./.env.dev && aws s3 sync dist/ s3://${S3_BUCKET}/ --delete && aws cloudfront create-invalidation --distribution-id ${CF_DIST} --paths \"/*\"",
+    "publish:dev": "source ./.env.dev && aws s3 sync dist/ s3://${S3_BUCKET}/ --delete && aws cloudfront create-invalidation --distribution-id ${CF_DIST} --paths \"/*\"",
+    "publish:prod": "source ./.env.prod && aws s3 sync dist/ s3://${S3_BUCKET}/ --delete && aws cloudfront create-invalidation --distribution-id ${CF_DIST} --paths \"/*\""
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^6.11.2",

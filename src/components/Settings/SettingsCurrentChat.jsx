@@ -3,12 +3,13 @@ import ModelSelector from '../ModelSelector/ModelSelector';
 import SystemPromptEditor from '../SystemPromptEditor/SystemPromptEditor';
 import { useChatContext } from '../../context/ChatContext';
 import { AVAILABLE_MODELS } from '../../config/models';
+import './SettingsCurrentChat.css';
 
 const SettingsCurrentChat = () => {
   const { selectedModel, setSelectedModel, systemPrompt, setSystemPrompt } = useChatContext();
   
   return (
-    <>
+    <div className="settings-current-chat">
       <section className="settings-section">
         <h2 className="section-title">Model</h2>
         <ModelSelector
@@ -24,7 +25,7 @@ const SettingsCurrentChat = () => {
           onSystemPromptChange={setSystemPrompt}
         />
       </section>
-    </>
+    </div>
   );
 };
 
