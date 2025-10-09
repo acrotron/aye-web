@@ -1,5 +1,3 @@
-// src/hooks/useMessages.js
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { marked } from 'marked';
 import { truncateText } from '../utils/helpers';
@@ -228,6 +226,7 @@ export const useMessages = (
           systemPrompt   // Pass the system prompt to the service
         );
 
+        //const response = await chatService.sendDummyMessage();
         // ---------------------------------------------------------
         // 6️⃣ Let the backend update any session‑level fields
         // ---------------------------------------------------------

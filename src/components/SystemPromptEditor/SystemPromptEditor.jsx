@@ -1,4 +1,3 @@
-// src/components/SystemPromptEditor/SystemPromptEditor.jsx
 import React, { useState, useRef, useEffect } from "react";
 import "./SystemPromptEditor.css";
 

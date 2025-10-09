@@ -1,4 +1,3 @@
-// src/hooks/useResizablePanes.js
 import { useState, useEffect, useCallback, useRef } from "react";
 
 /**

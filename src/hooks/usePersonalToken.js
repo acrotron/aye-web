@@ -1,8 +1,7 @@
-// src/hooks/usePersonalToken.js
 import { useState, useCallback } from 'react';
 import { ChatService } from '../services/ChatService';
 import { HuggingfaceService } from '../services/huggingface.service';
-//import { useChatContext } from '../context/ChatContext';
+import { useChatContext } from '../context/ChatContext'; // <-- added
 
 /**
  * Hook to fetch a personal‑access token for the current user.
@@ -15,20 +14,20 @@ import { HuggingfaceService } from '../services/huggingface.service';
  * }}
  */
 export const usePersonalToken = () => {
-  //const { currentUserId, chatService } = useChatContext();
+  const { currentUserId } = useChatContext(); // <-- obtain logged‑in user ID
+
   const chatService = new ChatService(new HuggingfaceService());
-  const currentUserId = "v@acrotron.com";
 
-  //console.log("currentUserId: ", currentUserId);
-  //console.log("chatService: ", chatService);
-  //console.log("chatServiceX: ", chatServiceX);
-
-  const [token, setToken]   = useState('');
+  const [token, setToken] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError]   = useState(null);
+  const [error, setError] = useState(null);
 
   // `useCallback` prevents the function from being re‑created on every render.
   const getToken = useCallback(async () => {
+    if (!currentUserId) {
+      setError('User not logged in');
+      return;
+    }
     setLoading(true);
     setError(null);
     try {
@@ -45,4 +44,3 @@ export const usePersonalToken = () => {
 
   return { token, loading, error, getToken };
 };
-

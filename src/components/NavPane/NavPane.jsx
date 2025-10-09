@@ -1,9 +1,7 @@
-// src/components/NavPane/NavPane.jsx
 import React, { useState } from "react";
 import { useChatContext } from "../../context/ChatContext";
 import { ProfileMenu } from "../../components/ProfileMenu/ProfileMenu";
 import ChatSessionSettingsDrawer from "../ChatSessionSettingsDrawer/ChatSessionSettingsDrawer";
-import { IoCogOutline } from "react-icons/io5";
 
 import "./NavPane.css";
 
@@ -16,6 +14,8 @@ const NavPane = ({ title }) => {
     deleteSession,
     user,
     signOut,
+    setShowSettings,
+    setActiveSettingsSection
   } = useChatContext();
 
   // ----- show first 5 + the rest in a collapsible list -----
@@ -46,6 +46,12 @@ const NavPane = ({ title }) => {
     </div>
   );
 
+  // Function to open settings drawer with specific section
+  const openSettingsSection = (section) => {
+    setActiveSettingsSection(section);
+    setShowSettings(true);
+  };
+
   return (
     <aside className="nav-pane">
       <header className="nav-header">
@@ -72,27 +78,17 @@ const NavPane = ({ title }) => {
       </header>
 
       <div className="nav-content">
-        {/* ---- always‑visible sessions ---- */}
+        {/* ---- always-visible sessions ---- */}
         {visibleSessions.map(renderSession)}
 
-        {/* ----- New button that opens the session‑settings drawer ----- */}
+        {/* ----- New button that opens the session-settings drawer ----- */}
         <button
           className="session-settings-btn"
-          onClick={() => setShowChatSettings(true)}
+          onClick={() => openSettingsSection('currentChat')}
           title="Chat session settings"
         >
         ⛭ Model and System Prompt
         </button> 
-        {/*  */}
-       {/*   
-        <button
-          className="profile-item-btn"
-          onClick={() => setShowChatSettings(true)}
-          title="Chat session settings"
-        >
-          <IoCogOutline className="profile-item-icon" aria-hidden="true" />
-          <span className="profile-item-text">Model and System Prompt</span>
-        </button> */}
 
         <hr />
 
@@ -133,4 +129,3 @@ const NavPane = ({ title }) => {
 };
 
 export default NavPane;
-
