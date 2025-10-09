@@ -32,21 +32,21 @@ export class HuggingfaceService {
     try {
       const response = await api.post(`${this.apiUrl}/invoke`, payload);
       console.log("hfService: response.data: ", response.data);
-      console.log("something: ", response.data?.body);
+      console.log("something: ", response.data?.response_url);
       //console.log("responseUrl: ", response.data.get("response_url"));
       console.log("status: ", response.status);
 
       // If server already returned the final payload, just return it
-      if (response.status !== 202 || !response.data?.body?.response_url) {
+      if (response.status !== 202 || !response.data?.response_url) {
         //return response.data;
       }
 
       // Otherwise poll the presigned GET URL until the object exists, then return it
-      const responseUrl =
-        (typeof response.data.body === 'string'
-          ? JSON.parse(response.data.body)
-          : response.data.body
-        )?.response_url;
+      const responseUrl = response.data?.response_url;
+        //(typeof response.data.body === 'string'
+        //  ? JSON.parse(response.data.body)
+        //  : response.data.body
+        //)?.response_url;
 
       const deadline = Date.now() + this.pollTimeoutMs;
       const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
