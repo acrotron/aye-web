@@ -44,7 +44,7 @@ function ChatInput({ onMessageSubmitted }) {
     <Box
       sx={{
         display: "flex",
-        alignItems: "center", // ← align vertically centered
+        alignItems: "center",
         gap: 1,
         p: 2,
         backgroundColor: "var(--chat-bg)",
@@ -74,7 +74,7 @@ function ChatInput({ onMessageSubmitted }) {
             borderColor: "var(--chat-input-border)",
           },
           "& .MuiInputBase-input": {
-            fontSize: "0.875rem",
+            fontSize: "0.95rem", // ← increased a hair
             lineHeight: 1.5,
           },
         }}
