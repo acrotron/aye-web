@@ -1,20 +1,9 @@
+/* Chat pane – dark background using theme variable */
 .chat-pane {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: #a0afa0;
-  border-right: 1px solid #e0e0e0;
-}
-
-/* Chat Pane - resizable */
-.chat-pane {
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  background: #a0afa0;
-  border-right: 1px solid #e0e0e0;
+  background: var(--chat-bg);
+  border-right: 1px solid var(--nav-header-border);
   overflow: hidden;
 }
-
-

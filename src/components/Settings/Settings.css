@@ -1,39 +1,23 @@
-/* src/components/Settings/Settings.css */
-
+/* Settings view – uses theme background variables */
 .settings-view {
-  position: absolute;          /* cover the whole app container */
-  inset: 0;                     /* top/right/bottom/left = 0 */
-  background: #fff;
+  position: absolute;
+  inset: 0;
+  background: var(--bg-paper);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   font-family: "Segoe UI", sans-serif;
 }
 
-/* header with title + close button */
 .settings-header {
   padding: 1rem;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--nav-header-border);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #f9f9f9;
+  background: var(--nav-header-bg);
 }
 
-/* simple back button */
-.close-btn {
-  background: none;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  color: #007bff;
-  padding: 0.25rem 0.5rem;
-}
-.close-btn:hover {
-  text-decoration: underline;
-}
-
-/* New two-column layout for settings */
 .settings-container {
   display: flex;
   flex: 1;
@@ -42,8 +26,8 @@
 
 .settings-nav {
   width: 250px;
-  border-right: 1px solid #ddd;
-  background: #f8f9fa;
+  border-right: 1px solid var(--nav-header-border);
+  background: var(--bg-paper);
   padding: 1rem 0;
   flex-shrink: 0;
 }
@@ -57,53 +41,19 @@
   text-align: left;
   cursor: pointer;
   font-size: 1rem;
-  color: #333;
+  color: var(--text-primary);
   transition: background-color 0.2s;
 }
 
-.nav-item:hover {
-  background-color: #e9ecef;
-}
+.nav-item:hover { background-color: #e9ecef; }
 
 .nav-item.active {
-  background-color: #007bff;
-  color: white;
+  background-color: var(--primary-bg);
+  color: #fff;
 }
 
 .settings-content {
   flex: 1;
   overflow-y: auto;
   padding: 1rem;
-}
-
-/* Token section styling */
-.token-section {
-  margin-bottom: 2rem;
-}
-
-.token-section h3 {
-  margin-top: 0;
-}
-
-.token-display {
-  margin-top: 1rem;
-  padding: 1rem;
-  background: #f8f9fa;
-  border-radius: 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.token-value {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: monospace;
-  word-break: break-all;
-}
-
-.error-message {
-  color: #dc3545;
-  margin-top: 0.5rem;
 }

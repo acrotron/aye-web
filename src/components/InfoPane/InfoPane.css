@@ -1,19 +1,25 @@
-/*
-.info-pane {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  background: #f9f9f9;
-}
-*/
-/* Info Pane - resizable */
+/* InfoPane – dark background via variable */
 .info-pane {
   height: 100vh;
   flex-shrink: 0;
-  background-color: #f9f9f9;
-  overflow: hidden;
+  background-color: var(--info-bg);
+  color: #e0e0e0;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
 
+/* Scrollbars – use dark pane variables */
+.info-content::-webkit-scrollbar { width: 6px; }
+.info-content::-webkit-scrollbar-track { background: var(--nav-scrollbar-track); }
+.info-content::-webkit-scrollbar-thumb { background: var(--nav-scrollbar-thumb); border-radius: 3px; }
+.info-content::-webkit-scrollbar-thumb:hover { background: var(--nav-scrollbar-thumb-hover); }
 
+.info-content {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+}

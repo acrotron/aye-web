@@ -1,25 +1,9 @@
-/* NavPane.css */
-  /*
-   width: 400px;
-   background-color: #EADDCA;
-*/
-/*
-.nav-pane {
-  background-color: #f0f0f0;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  border-right: 1px solid #ccc;
-  flex-shrink: 0;
-}
-*/
-
-/* Nav Pane - now resizable */
+/* NavPane – dark theme using theme variables */
 .nav-pane {
   flex-shrink: 0;
-  border-right: 1px solid #ccc;
-  color: white;
-  background-color: #f0f0f0;
+  border-right: 1px solid var(--nav-header-border);
+  background-color: var(--nav-bg);
+  color: #e0e0e0; /* light text for contrast – stays */
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -30,109 +14,43 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  border-bottom: 1px solid #ccc;
-  background-color: #fcfcfc;
+  border-bottom: 1px solid var(--nav-header-border);
+  background-color: var(--nav-header-bg);
   height: 64px;
 }
 
 .nav-header h2 {
   font-size: 1.2rem;
   margin: 0;
-  color: white;
+  color: #fff;
 }
 
-.new-chat-btn {
-  margin-bottom: 10px;
-  width: 30px;
-  height: 30px;
-  border: none;
-  border-radius: 50%;
-  background-color: #4CAF50;
-  color: white;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s ease;
-  flex-shrink: 0;
-}
-
-.new-chat-btn:hover {
-  background-color: #45a049;
-}
-
-.new-chat-btn svg {
-  width: 18px;
-  height: 18px;
-}
-
-.plus-icon {
-  font-weight-X: bold;
-}
-
+/* Content area – inherits dark background */
 .nav-content {
   flex: 1;
   padding: 1rem;
   overflow-y: auto;
 }
 
-.nav-content h3 {
-  font-size: 0.9rem;
-  margin: 0 0 1rem 0;
-  color: #000000;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+/* Scrollbars – use dark‑pane variables */
+.nav-content::-webkit-scrollbar {
+  width: 6px;
 }
 
-/* Model Selector Styles */
-.model-selector-container {
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
-  padding: 0.75rem;
-  background-color: #ffffff;
-  border-radius: 8px;
-  border: 1px solid #ddd;
+.nav-content::-webkit-scrollbar-track {
+  background: var(--nav-scrollbar-track);
 }
 
-.model-selector-label {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.nav-content::-webkit-scrollbar-thumb {
+  background: var(--nav-scrollbar-thumb);
+  border-radius: 3px;
 }
 
-.model-selector {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background-color: #fff;
-  color: #333;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: border-color 0.2s ease;
+.nav-content::-webkit-scrollbar-thumb:hover {
+  background: var(--nav-scrollbar-thumb-hover);
 }
 
-.model-selector:hover {
-  border-color: #999;
-}
-
-.model-selector:focus {
-  outline: none;
-  border-color: #4CAF50;
-  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
-}
-
-.chat-sessions {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-  /* padding-left: 0.5rem; */
+/* Session items – use CSS variables for colours */
 .chat-session {
   display: flex;
   justify-content: space-between;
@@ -140,42 +58,33 @@
   border-radius: 8px;
   padding: 0.2rem 0.5rem;
   cursor: pointer;
-  background-color: #fff;
+  background-color: var(--session-bg);
   transition: background-color 0.2s;
   margin: 3px 0px;
 }
 
 .chat-session:hover {
-  background-color: #f0f0f0;
+  background-color: var(--session-hover-bg);
 }
 
 .chat-session.active {
-  background-color: #aeaeae;
+  background-color: var(--session-active-bg);
+  color: #fff;
 }
 
-.session-info {
-  flex: 1;
-  min-width: 0;
-}
+.session-info { flex: 1; min-width: 0; }
 
 .session-name {
   font-size: 0.9rem;
   font-weight: 500;
   margin-bottom: 0.25rem;
-  color: black;
+  color: #000;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.session-name:hover {
-  color: black;
-}
-
-.session-date {
-  font-size: 0.75rem;
-  color: #f0f0f0;
-}
+.session-date { font-size: 0.75rem; color: var(--text-secondary); }
 
 .delete-session-btn {
   background: none;
@@ -189,127 +98,9 @@
   transition: opacity 0.2s, color 0.2s;
 }
 
-.chat-session:hover .delete-session-btn {
-  opacity: 0.5;
-}
+.chat-session:hover .delete-session-btn { opacity: 0.5; }
 
 .delete-session-btn:hover {
   color: #ff6b6b;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255,255,255,0.1);
 }
-
-/* Dark scrollbar for nav pane */
-.nav-content::-webkit-scrollbar {
-  width: 6px;
-}
-
-.nav-content::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.nav-content::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 3px;
-}
-
-.nav-content::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5);
-}
-
-/* Responsive Design */
-@media (max-width: 1200px) {
-  .nav-pane {
-    width: 240px;
-  }
-}
-
-@media (max-width: 768px) {
-  .nav-pane {
-    width: 100%;
-    height: auto;
-    max-height: 150px;
-    flex-shrink: 0;
-  }
-
-  .nav-content h3 {
-    font-size: 0.8rem;
-  }
-
-  .session-name {
-    font-size: 0.8rem;
-  }
-
-  .model-selector-container {
-    margin-bottom: 1rem;
-    padding: 0.5rem;
-  }
-
-  .model-selector-label {
-    font-size: 0.8rem;
-  }
-
-  .model-selector {
-    font-size: 0.85rem;
-    padding: 0.4rem;
-  }
-}
-
-/* ---------- dropdown button ---------- */
-.more-wrapper {
-  margin-top: 0.5rem;
-}
-
-.more-btn {
-  width: 100%;
-  background: transparent;
-  border: none;
-  color: #555;
-  padding: 0.4rem 0;
-  cursor: pointer;
-  font-size: 0.9rem;
-  text-align: left;
-}
-
-/* ---------- hidden list container ---------- */
-.hidden-sessions {
-  max-height: 200px;               /* limit height, then scroll */
-  overflow-y: auto;
-  margin-top: 0.4rem;
-  border-top: 1px solid #ddd;
-  padding-top: 0.4rem;
-}
-
-/* keep same look for sessions inside the dropdown */
-.hidden-sessions .chat-session {
-  background-color: #fafafa;
-}
-
-/* Put this **after** the existing .hidden-sessions block */
-.hidden-sessions .chat-session.active {
-  background-color: #aeaeae;   /* same colour as the normal active row */
-  color: #000;                 /* optional – ensure text is readable */
-}
-
-/* optional: dark scrollbar matches the rest of the pane */
-.hidden-sessions::-webkit-scrollbar {
-  width: 6px;
-}
-.hidden-sessions::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-}
-.hidden-sessions::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 3px;
-}
-.hidden-sessions::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5);
-}
-
-/* ---------- adjust overall nav-content overflow ----------
-   (the outer pane already scrolls, keep it) */
-.nav-content {
-  flex: 1;
-  padding: 1rem;
-  overflow-y: auto;
-}
-

@@ -1,19 +1,18 @@
-/* chat-input.component.css */
-/* border-top: 1px solid #e0e0e0; */
+/* ChatInput – colours now from theme variables */
 .chat-input-container {
   display: flex;
   align-items: flex-end;
   gap: 8px;
   padding: 12px;
-  background-color: #a0afa0;
+  background-color: var(--chat-bg);
 }
 
 .chat-input {
   flex: 1;
   min-height: 80px;
-  max-height: 120px; /* 5 lines × 24px line-height */
+  max-height: 120px;
   padding: 8px 12px;
-  border: 1px solid #004000;
+  border: 1px solid var(--chat-input-border); /* custom colour moved to theme */
   border-radius: 20px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-size: 14px;
@@ -22,21 +21,15 @@
   outline: none;
   transition: border-color 0.2s ease;
   overflow-y: hidden;
-  background-color: #ddffdd;
+  background-color: var(--chat-input-bg); /* light green moved to theme */
 }
-
-/*
-  border-color: #007bff;
-*/
 
 .chat-input:focus {
-  border-color: #7b5e5b;
-  box-shadow: 0 0 0 2px rgba(255, 123, 0, 0.25);
+  border-color: #7b5e5b; /* kept as a subtle focus colour */
+  box-shadow: 0 0 0 2px rgba(255,123,0,0.25);
 }
 
-.chat-input.scrollable {
-  overflow-y: auto;
-}
+.chat-input.scrollable { overflow-y: auto; }
 
 .send-button {
   margin-bottom: 10px;
@@ -44,8 +37,8 @@
   height: 40px;
   border: none;
   border-radius: 50%;
-  background-color: #007bff;
-  color: white;
+  background-color: var(--primary-bg);
+  color: #fff;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -54,17 +47,8 @@
   flex-shrink: 0;
 }
 
-.send-button:hover:not(:disabled) {
-  background-color: #0056b3;
-}
+.send-button:hover:not(:disabled) { background-color: var(--primary-bg-hover); }
 
-.send-button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
+.send-button:disabled { background-color: #cccccc; cursor: not-allowed; }
 
-.send-button svg {
-  width: 18px;
-  height: 18px;
-}
-
+.send-button svg { width: 18px; height: 18px; }

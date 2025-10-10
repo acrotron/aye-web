@@ -1,20 +1,20 @@
+/* ChatHeader – colours via theme variables */
 .chat-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  border-bottom: 1px solid #e0e0e0;
-  background: #f9f9f9;
+  border-bottom: 1px solid var(--chat-header-border);
+  background: var(--chat-header-bg);
 }
 
 .chat-header h1 {
   margin: 0;
   font-size: 1.2rem;
-  color: #333;
+  color: var(--chat-header-text);
 }
 
 .header-actions {
   display: flex;
   gap: 0.5rem;
 }
-

@@ -1,120 +1,121 @@
-// Ion Icons set: https://ionic.io/ionicons
-// installed with: npm install react-icons
-import { IoExitOutline, IoCogOutline } from "react-icons/io5";
-import { useState, useRef, useEffect, useCallback } from 'react';
+// components/ProfileMenu/ProfileMenu.jsx
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useChatContext } from '../../context/ChatContext';
-// import { useNavigate } from 'react-router-dom';  // Removed navigation import
-import './ProfileMenu.css';
+import { IoExitOutline, IoCogOutline } from 'react-icons/io5';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
-
+/**
+ * ProfileMenu – a fixed‑position avatar + username button that opens a drop‑up
+ * menu containing the current user name, a Settings entry and a Log‑out entry.
+ * All UI elements are built with Material‑UI components and styled via the
+ * theme (`sx` props). No external CSS is required.
+ */
 export const ProfileMenu = () => {
-  //  ── UI state ───────────────────────────────────────
-  const [expanded, setExpanded] = useState(false);
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  // --- UI state -------------------------------------------------------
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
 
-  //  ── Data coming from your ChatProvider (or any auth source) ──
-  const { currentUserId, user, signOut, setShowSettings, setActiveSettingsSection } = useChatContext();
-  // const navigate = useNavigate();  // Removed navigation hook
+  // --- Context values -------------------------------------------------
+  const { currentUserId, signOut, setShowSettings, setActiveSettingsSection } =
+    useChatContext();
 
-  //  ── Helpers ───────────────────────────────────────
-  const toggle = () => setExpanded((prev) => !prev);
-  const handleLogout = () => {
-    signOut();          // Amplify will clear the session and show the login UI again
-    setExpanded(false); // collapse the menu
+  // --- Handlers ------------------------------------------------------
+  const handleToggle = (event) => {
+    setAnchorEl(event.currentTarget);
   };
 
-  // ---------- CLOSE‑ON‑CLICK‑OUTSIDE ----------NOT WORKING
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleSettings = () => {
+    setActiveSettingsSection('developer');
+    setShowSettings(true);
+    handleClose();
+  };
+
+  const handleLogout = () => {
+    signOut();
+    handleClose();
+  };
+
+  // Close menu on outside click (MUI already handles Escape)
+  const menuRef = useRef(null);
   const handleClickOutside = useCallback(
-    (event) => {
-      // If the menu is collapsed, ignore.
-      if (!expanded) return;
-
-      // `wrapperRef.current` is the div that encloses the button + panel.
-      if (
-        wrapperRef.current &&
-        !wrapperRef.current.contains(event.target)
-      ) {
-        setExpanded(false);
-        // toggleBtnRef.current?.focus();  // Commented out unused reference
+    (e) => {
+      if (open && menuRef.current && !menuRef.current.contains(e.target)) {
+        handleClose();
       }
     },
-    [expanded]
+    [open]
   );
-
-  // ---------- CLOSE‑ON‑ESC ----------
-  const handleEsc = useCallback(
-    (event) => {
-      if (expanded && event.key === 'Escape') {
-        setExpanded(false);
-        // toggleBtnRef.current?.focus();  // Commented out unused reference
-      }
-    },
-    [expanded]
-  );
-
-  // Register listeners when the component mounts, and clean up on unmount.
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('keydown', handleEsc);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('keydown', handleEsc);
-    };
-  }, [handleClickOutside, handleEsc]);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [handleClickOutside]);
 
-  //  ── Render ───────────────────────────────────────
-return (
-  <div className="profile-menu">
-    {/* ---------- Red rectangle that holds logo and toggle button ---------- */}
-    <div className="profile-header-box">
-      <div className="profile-header">
-        {/* Logo */}
-        <img
+  return (
+    <Box sx={{ position: 'fixed', left: 16, bottom: 16, zIndex: 1300 }}>
+      {/* Avatar + toggle button */}
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Avatar
           src="/logo-192x192.png"
           alt="App logo"
-          className="profile-logo"
-          width={32}
-          height={32}
+          sx={{ width: 32, height: 32 }}
         />
-
-        {/* Toggle button */}
-        <button
-          type="button"
-          className="profile-toggle"
-          onClick={toggle}
-          aria-expanded={expanded}
-          aria-label="User menu"
+        <Button
+          variant="outlined"
+          endIcon={open ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+          onClick={handleToggle}
+          sx={{ textTransform: 'none', minWidth: 120 }}
         >
           {currentUserId ?? 'Guest'}
-          <span className={`arrow ${expanded ? 'up' : 'down'}`} />
-        </button>
-      </div>
-    </div>
+        </Button>
+      </Box>
 
-    {/* ---------- Drop‑up panel (only when expanded) ---------- */}
-    {expanded && (
-      <div className="profile-panel">
-        <div className="profile-username">{currentUserId ?? 'Guest'}</div>
-
-        {/* Settings button - now opens slideout drawer */}
-        <button 
-          className="profile-item-btn" 
-          onClick={() => {
-            setActiveSettingsSection('developer');
-            setShowSettings(true);
-            setExpanded(false);
-          }}
-        >
-          <IoCogOutline className="profile-item-icon" aria-hidden="true" />
-          <span className="profile-item-text">Settings</span>
-        </button>
-        {/* Logout button with the exit‑outline icon */}
-        <button className="profile-item-btn" onClick={signOut}>
-          <IoExitOutline className="profile-item-icon" aria-hidden="true" />
-          <span className="profile-item-text">Log out</span>
-        </button>
-      </div>
-    )}
-  </div>
-);
+      {/* Drop‑up menu */}
+      <Menu
+        ref={menuRef}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        // Position the menu above the button (drop‑up)
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        PaperProps={{ sx: { mt: 1.5, minWidth: 200, boxShadow: 3 } }}
+      >
+        {/* Header with username – uses Typography for consistent theming */}
+        <Box sx={{ px: 2, py: 1, bgcolor: 'background.paper' }}>
+          <Typography variant="subtitle2" noWrap>
+            {currentUserId ?? 'Guest'}
+          </Typography>
+        </Box>
+        <Divider />
+        {/* Settings menu item */}
+        <MenuItem onClick={handleSettings}>
+          <ListItemIcon>
+            <IoCogOutline size={20} />
+          </ListItemIcon>
+          <ListItemText primary="Settings" />
+        </MenuItem>
+        {/* Log‑out menu item */}
+        <MenuItem onClick={handleLogout}>
+          <ListItemIcon>
+            <IoExitOutline size={20} />
+          </ListItemIcon>
+          <ListItemText primary="Log out" />
+        </MenuItem>
+      </Menu>
+    </Box>
+  );
 };

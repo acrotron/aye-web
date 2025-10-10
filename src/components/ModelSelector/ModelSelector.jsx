@@ -1,32 +1,37 @@
 // components/ModelSelector/ModelSelector.jsx
 import React from 'react';
-import './ModelSelector.css';
+import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
+/**
+ * Model selector using MUI components.
+ * Props:
+ *   - selectedModel: currently selected model id
+ *   - onModelChange: callback receiving the new model id
+ *   - availableModels: array of { id, name } objects
+ */
 const ModelSelector = ({ selectedModel, onModelChange, availableModels }) => {
   const handleChange = (event) => {
     onModelChange(event.target.value);
   };
 
   return (
-    <div className="model-selector-container">
-      <label htmlFor="model-select" className="model-selector-label">
-        Model:
-      </label>
-      <select
+    <FormControl variant="outlined" fullWidth>
+      <InputLabel id="model-select-label">Model</InputLabel>
+      <Select
+        labelId="model-select-label"
         id="model-select"
-        className="model-selector"
         value={selectedModel}
+        label="Model"
         onChange={handleChange}
       >
         {availableModels.map((model) => (
-          <option key={model.id} value={model.id}>
+          <MenuItem key={model.id} value={model.id}>
             {model.name}
-          </option>
+          </MenuItem>
         ))}
-      </select>
-    </div>
+      </Select>
+    </FormControl>
   );
 };
 
 export default ModelSelector;
-

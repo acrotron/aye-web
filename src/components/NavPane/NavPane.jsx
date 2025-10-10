@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+// components/NavPane/NavPane.jsx
+import React from "react";
 import { useChatContext } from "../../context/ChatContext";
 import { ProfileMenu } from "../../components/ProfileMenu/ProfileMenu";
-import ChatSessionSettingsDrawer from "../ChatSessionSettingsDrawer/ChatSessionSettingsDrawer";
-
+import SessionList from "../SessionList/SessionList"; // MUI‑styled session list
 import "./NavPane.css";
+import { Button } from "@mui/material";
 
 const NavPane = ({ title }) => {
   const {
@@ -12,41 +13,14 @@ const NavPane = ({ title }) => {
     setCurrentSessionId,
     createNewChat,
     deleteSession,
-    user,
-    signOut,
     setShowSettings,
-    setActiveSettingsSection
+    setActiveSettingsSection,
   } = useChatContext();
 
-  // ----- show first 5 + the rest in a collapsible list -----
-  const MAX_VISIBLE = 1;
-  const visibleSessions = chatSessions.slice(0, MAX_VISIBLE);
-  const hiddenSessions = chatSessions.slice(MAX_VISIBLE);
+  // Show the first session always; up to five more in the collapsible list.
+  const MAX_HIDDEN = 100; // number of sessions inside the expander
 
-  const [showMore, setShowMore] = useState(false);
-  const [showChatSettings, setShowChatSettings] = useState(false); // ← new
-
-  const renderSession = (session) => (
-    <div
-      key={session.id}
-      className={`chat-session ${
-        session.id === currentSessionId ? "active" : ""
-      }`}
-      onClick={() => setCurrentSessionId(session.id)}
-    >
-      <div className="session-info">
-        <div className="session-name">{session.name}</div>
-      </div>
-      <button
-        className="delete-session-btn"
-        onClick={(e) => deleteSession(session.id, e)}
-      >
-        ✕
-      </button>
-    </div>
-  );
-
-  // Function to open settings drawer with specific section
+  // Open the settings drawer on the current‑chat section
   const openSettingsSection = (section) => {
     setActiveSettingsSection(section);
     setShowSettings(true);
@@ -56,11 +30,20 @@ const NavPane = ({ title }) => {
     <aside className="nav-pane">
       <header className="nav-header">
         <h2>{title}</h2>
-
-        <button
-          className="new-chat-btn"
+        {/* New‑chat button – now an MUI Button */}
+        <Button
           onClick={createNewChat}
-          type="button"
+          variant="contained"
+          color="success"
+          sx={{
+            minWidth: 0,
+            width: 40,
+            height: 40,
+            borderRadius: "50%",
+            p: 0,
+            textTransform: "none",
+          }}
+          aria-label="New chat"
         >
           <svg
             width="20"
@@ -74,56 +57,25 @@ const NavPane = ({ title }) => {
             <line x1="1" y1="12" x2="23" y2="12"></line>
             <line x1="12" y1="1" x2="12" y2="23"></line>
           </svg>
-        </button>
+        </Button>
       </header>
 
+      <hr />
+
       <div className="nav-content">
-        {/* ---- always-visible sessions ---- */}
-        {visibleSessions.map(renderSession)}
+        {/* MUI‑styled session list with hidden‑sessions collapse */}
+        <SessionList
+          sessions={chatSessions}
+          currentSessionId={currentSessionId}
+          setCurrentSessionId={setCurrentSessionId}
+          deleteSession={deleteSession}
+          maxHidden={MAX_HIDDEN}
+          openSettings={() => openSettingsSection('currentChat')}
+        />
 
-        {/* ----- New button that opens the session-settings drawer ----- */}
-        <button
-          className="session-settings-btn"
-          onClick={() => openSettingsSection('currentChat')}
-          title="Chat session settings"
-        >
-        ⛭ Model and System Prompt
-        </button> 
-
-        <hr />
-
-        {/* ---- dropdown trigger (only if there are hidden ones) ---- */}
-        {hiddenSessions.length > 0 && (
-          <div className="more-wrapper">
-            <button
-              className="more-btn"
-              onClick={() => setShowMore((prev) => !prev)}
-            >
-              {showMore ? "▲ Show less" : `▼ ${hiddenSessions.length} more`}
-            </button>
-
-            {/* ---- hidden sessions list (scrollable when needed) ---- */}
-            {showMore && (
-              <div className="hidden-sessions">
-                {hiddenSessions.map(renderSession)}
-              </div>
-            )}
-          </div>
-        )}
-
+        {/* Profile menu – now rendered */}
         <ProfileMenu />
       </div>
-
-      {/* -------------------------------------------------------------
-         Floating drawer – it contains the Model selector and the System
-         Prompt editor.  It is rendered only when `showChatSettings`
-         is true.
-         ------------------------------------------------------------- */}
-      {showChatSettings && (
-        <ChatSessionSettingsDrawer
-          onClose={() => setShowChatSettings(false)}
-        />
-      )}
     </aside>
   );
 };

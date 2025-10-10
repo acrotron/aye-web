@@ -1,75 +1,72 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useChatContext } from "../../context/ChatContext";
 import ModelSelector from "../ModelSelector/ModelSelector";
 import SystemPromptEditor from "../SystemPromptEditor/SystemPromptEditor";
 import DeveloperSettings from "../Settings/DeveloperSettings";
 import { AVAILABLE_MODELS } from "../../config/models";
-import "./ChatSessionSettingsDrawer.css";
 
-const ANIMATION_DURATION = 220; // ms – must match the CSS animation time
+// MUI imports
+import Drawer from "@mui/material/Drawer";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import CloseIcon from "@mui/icons-material/Close";
 
-const ChatSessionSettingsDrawer = ({ onClose, initialSection = 'currentChat' }) => {
-  const {
-    selectedModel,
-    setSelectedModel,
-    systemPrompt,
-    setSystemPrompt,
-  } = useChatContext();
+/**
+ * ChatSessionSettingsDrawer – MUI version.
+ *
+ * Props:
+ *   open            – boolean controlling the drawer visibility.
+ *   onClose         – callback invoked when the drawer should be closed.
+ *   initialSection  – which tab to show initially ("currentChat" or "developer").
+ */
+const ChatSessionSettingsDrawer = ({ open = false, onClose, initialSection = "currentChat" }) => {
+  const { selectedModel, setSelectedModel, systemPrompt, setSystemPrompt } =
+    useChatContext();
 
-  // -----------------------------------------------
-  // 1️⃣ Closing state – true while the slide‑out runs
-  // -----------------------------------------------
-  const [isClosing, setIsClosing] = useState(false);
   const [currentSection, setCurrentSection] = useState(initialSection);
 
-  // -------------------------------------------------
-  // Close handler – start the slide‑out animation,
-  // then wait for the animation to finish before calling the parent.
-  // -------------------------------------------------
   const handleClose = () => {
-    setIsClosing(true);                // start slide‑out CSS
+    onClose();
   };
-
-  // After the animation finishes, tell the parent to actually remove us.
-  useEffect(() => {
-    if (!isClosing) return;
-    const timer = setTimeout(() => {
-      onClose();                       // parent removes the drawer from the tree
-    }, ANIMATION_DURATION);
-    return () => clearTimeout(timer);
-  }, [isClosing, onClose]);
-
-  // Prevent clicks inside the drawer from bubbling up to the backdrop.
-  const stopPropagation = (e) => e.stopPropagation();
 
   const renderSection = () => {
     switch (currentSection) {
-      case 'currentChat':
+      case "currentChat":
         return (
           <>
-            <section className="settings-section">
-              <h2 className="section-title">Model</h2>
+            <Box sx={{ mb: 3 }}>
+              <Typography variant="h6" gutterBottom>
+                Model
+              </Typography>
               <ModelSelector
                 selectedModel={selectedModel}
                 onModelChange={setSelectedModel}
                 availableModels={AVAILABLE_MODELS}
               />
-            </section>
-            <section className="settings-section">
-              <h2 className="section-title">System Prompt</h2>
+            </Box>
+            <Box>
+              <Typography variant="h6" gutterBottom>
+                System Prompt
+              </Typography>
               <SystemPromptEditor
                 systemPrompt={systemPrompt}
                 onSystemPromptChange={setSystemPrompt}
               />
-            </section>
+            </Box>
           </>
         );
-      case 'developer':
+      case "developer":
         return (
-          <section className="settings-section">
-            <h2 className="section-title">Developer Settings</h2>
+          <Box>
+            <Typography variant="h6" gutterBottom>
+              Developer Settings
+            </Typography>
             <DeveloperSettings />
-          </section>
+          </Box>
         );
       default:
         return null;
@@ -77,44 +74,59 @@ const ChatSessionSettingsDrawer = ({ onClose, initialSection = 'currentChat' }) 
   };
 
   return (
-    // Backdrop – click outside the drawer triggers the close animation
-    <div className="session-settings-backdrop" onClick={handleClose}>
-      {/* Drawer panel – apply a CSS class based on `isClosing` */}
-      <div
-        className={`session-settings-drawer ${
-          isClosing ? "closing" : "opening"
-        }`}
-        onClick={stopPropagation}
+    <Drawer
+      anchor="right"
+      open={open}
+      onClose={handleClose}
+      // Force the drawer to occupy 80 % of the viewport width on all screens
+      PaperProps={{ sx: { width: "80vw", maxWidth: "80vw" } }}
+    >
+      {/* Header */}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          p: 2,
+          borderBottom: 1,
+          borderColor: "divider",
+        }}
       >
-        <header className="session-settings-header">
-          <h1>Settings</h1>
-          <button className="close-btn" onClick={handleClose}>
-            ✕
-          </button>
-        </header>
+        <Typography variant="h5" component="div">
+          Settings
+        </Typography>
+        <IconButton edge="end" onClick={handleClose} aria-label="close">
+          <CloseIcon />
+        </IconButton>
+      </Box>
 
-        <div className="session-settings-content">
-          <nav className="settings-nav">
-            <button 
-              className={`nav-item ${currentSection === 'currentChat' ? 'active' : ''}`}
-              onClick={() => setCurrentSection('currentChat')}
-            >
-              Current Chat
-            </button>
-            <button 
-              className={`nav-item ${currentSection === 'developer' ? 'active' : ''}`}
-              onClick={() => setCurrentSection('developer')}
-            >
-              Developer Settings
-            </button>
-          </nav>
+      {/* Navigation & Content container */}
+      <Box sx={{ display: "flex", flexGrow: 1, overflow: "hidden" }}>
+        {/* Navigation */}
+        <List
+          component="nav"
+          sx={{ width: 200, borderRight: 1, borderColor: "divider" }}
+        >
+          <ListItemButton
+            selected={currentSection === "currentChat"}
+            onClick={() => setCurrentSection("currentChat")}
+          >
+            <ListItemText primary="Current Chat" />
+          </ListItemButton>
+          <ListItemButton
+            selected={currentSection === "developer"}
+            onClick={() => setCurrentSection("developer")}
+          >
+            <ListItemText primary="Developer Settings" />
+          </ListItemButton>
+        </List>
 
-          <main>
-            {renderSection()}
-          </main>
-        </div>
-      </div>
-    </div>
+        {/* Main content */}
+        <Box sx={{ flexGrow: 1, overflowY: "auto", p: 2 }}>
+          {renderSection()}
+        </Box>
+      </Box>
+    </Drawer>
   );
 };
 

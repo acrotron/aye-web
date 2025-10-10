@@ -1,13 +1,13 @@
-
+/* CopyButton – colours via theme variables */
 .copy-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
   padding: 0.25rem 0.5rem;
-  background-color: #f8f9fa;
+  background-color: var(--bg-paper);
   border: 1px solid #dee2e6;
   border-radius: 4px;
-  color: #495057;
+  color: var(--text-primary);
   font-size: 0.75rem;
   font-weight: 500;
   cursor: pointer;
@@ -22,22 +22,14 @@
 }
 
 .copy-btn.copied {
-  background-color: #d4edda;
+  background-color: var(--success-bg);
   border-color: #c3e6cb;
   color: #155724;
 }
 
-.copy-btn-text {
-  font-size: 0.7rem;
-}
+.copy-btn-text { font-size: 0.7rem; }
 
 @media (max-width: 768px) {
-  .copy-btn {
-    padding: 0.2rem 0.4rem;
-    font-size: 0.7rem;
-  }
-  
-  .copy-btn-text {
-    display: none;
-  }
+  .copy-btn { padding: 0.2rem 0.4rem; font-size: 0.7rem; }
+  .copy-btn-text { display: none; }
 }

@@ -1,33 +1,7 @@
-/*
+/* Resize Handle – now uses theme variables */
 .resize-handle {
   width: 10px;
-  background: #f0f0f0;
-  cursor: col-resize;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-left: 1px solid #e0e0e0;
-  border-right: 1px solid #e0e0e0;
-  transition: background-color 0.2s;
-}
-
-.resize-handle:hover,
-.resize-handle.resizing {
-  background: #d0d0d0;
-}
-
-.resize-indicator {
-  width: 2px;
-  height: 40px;
-  background: #999;
-  border-radius: 1px;
-}
-*/
-
-/* Resize Handle */
-.resize-handle {
-  width: 10px;
-  background-color: #fff;
+  background-color: var(--resize-handle-bg);
   cursor: col-resize;
   position: relative;
   display: flex;
@@ -38,21 +12,21 @@
 }
 
 .resize-handle:hover {
-  background-color: #fff;
-  border-left: 1px solid #e0e0e0;
-  border-right: 1px solid #e0e0e0;
+  background-color: var(--resize-handle-bg);
+  border-left: 1px solid var(--resize-handle-border);
+  border-right: 1px solid var(--resize-handle-border);
 }
 
 .resize-handle.resizing {
-  background-color: #fff;
-  border-left: 1px solid #e0e0e0;
-  border-right: 1px solid #e0e0e0;
+  background-color: var(--resize-handle-bg);
+  border-left: 1px solid var(--resize-handle-border);
+  border-right: 1px solid var(--resize-handle-border);
 }
 
 .resize-indicator {
   width: 2px;
   height: 60%;
-  background-color: #999;
+  background-color: var(--typing-indicator);
   border-radius: 2px;
   opacity: 0;
   transition: opacity 0.2s;
@@ -64,7 +38,5 @@
 }
 
 .resize-handle.resizing .resize-indicator {
-  background-color: white;
+  background-color: var(--resize-handle-bg);
 }
-
-
