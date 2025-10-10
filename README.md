@@ -1,5 +1,5 @@
 # aye-web
-Aye: web client
+Aye Chat: web client
 
 # REACT 18.2 LTS install: compatible with amplify
 
