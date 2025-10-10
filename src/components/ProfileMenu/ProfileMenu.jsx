@@ -74,12 +74,16 @@ export const ProfileMenu = () => {
           sx={{ width: 32, height: 32 }}
         />
         <Button
-          variant="outlined"
+          //variant="contained"
           endIcon={open ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
           onClick={handleToggle}
-          sx={{ textTransform: 'none', minWidth: 120 }}
+          //sx={{ textTransform: 'none', minWidth: 120 }}
         >
-          {currentUserId ?? 'Guest'}
+          <Avatar
+            src="/default-avatar-192x192.png"
+            alt="User Avatar"
+            sx={{ width: 32, height: 32 }}
+          />
         </Button>
       </Box>
 
