@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// components/ChatSessionSettingsDrawer/ChatSessionSettingsDrawer.jsx
+import React, { useState, useEffect } from "react";
 import { useChatContext } from "../../context/ChatContext";
 import ModelSelector from "../ModelSelector/ModelSelector";
 import SystemPromptEditor from "../SystemPromptEditor/SystemPromptEditor";
@@ -27,7 +28,18 @@ const ChatSessionSettingsDrawer = ({ open = false, onClose, initialSection = "cu
   const { selectedModel, setSelectedModel, systemPrompt, setSystemPrompt } =
     useChatContext();
 
+  // internal state for the currently displayed section
   const [currentSection, setCurrentSection] = useState(initialSection);
+
+  // Reset to the requested initial section whenever the drawer opens.
+  // This ensures that clicking the "Model & System Prompt" button always
+  // shows the "Current Chat" tab, even if the user previously switched
+  // to another tab.
+  useEffect(() => {
+    if (open) {
+      setCurrentSection(initialSection);
+    }
+  }, [open, initialSection]);
 
   const handleClose = () => {
     onClose();

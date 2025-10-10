@@ -31,16 +31,20 @@ export const useAdditionalInfo = () => {
   // message. The previous regex only matched language identifiers made of
   // "word" characters (\w), which excluded common identifiers like
   // "c++", "js", "python-3" etc. The new regex captures any characters
-  // up to the first newline (or nothing) after the opening backticks.
+  // up to the first newline **or** works when the code block has no
+  // language identifier at all.
   // -----------------------------------------------------------------
   const extractAdditionalInfo = useCallback(
     (botMessage) => {
       console.log('🔎 extracting additional info'); // optional debug
-      // Matches: ```optionalLanguage\ncode...```  (language may be empty)
-      const codeBlockRegex = /```([^`\n]*)\n([\s\S]*?)```/g;
+      // Matches:
+      //   ```optionalLanguage\ncode...```   (language may be empty)
+      //   ```\ncode...```                (no language, but a newline)
+      //   ```code```                       (single‑line code block, no newline)
+      const codeBlockRegex = /```(?:([^`\n]*)\n)?([\s\S]*?)```/g;
       let match;
       while ((match = codeBlockRegex.exec(botMessage)) !== null) {
-        const language = match[1].trim() || 'text';
+        const language = (match[1] || '').trim() || 'text';
         const code = match[2];
         addAdditionalInfo('code', `Code (${language})`, code);
       }
