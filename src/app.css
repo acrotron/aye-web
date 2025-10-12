@@ -95,7 +95,7 @@ body {
 
   /* Chat input colours */
   --chat-input-border: #004000;
-  --chat-input-bg: #ddffdd;
+  --chat-input-bg: #f5f7fa; /* updated to requested dark background */
 }
 
 /* Main App Container */
