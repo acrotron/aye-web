@@ -1,20 +1,12 @@
+/* InfoHeader – colours via theme variables */
 .info-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  border-bottom: 1px solid #e0e0e0;
-  background: #fff;
+  border-bottom: 1px solid var(--info-header-border);
+  background: var(--info-header-bg);
+  color: #fff;
 }
 
-.info-header h3 {
-  margin: 0;
-  font-size: 1rem;
-  color: #333;
-}
-
-.info-actions {
-  display: flex;
-  gap: 0.5rem;
-}
-
+.info-header h3 { margin: 0; font-size: 1rem; color: #fff; }

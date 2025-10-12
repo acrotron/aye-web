@@ -1,6 +1,8 @@
+// components/Settings/DeveloperSettings.jsx
 import React, { useState } from 'react';
 import { usePersonalToken } from '../../hooks/usePersonalToken';
 import './DeveloperSettings.css';
+import { Button } from '@mui/material';
 
 const DeveloperSettings = () => {
   // Hook supplies everything we need.
@@ -22,9 +24,16 @@ const DeveloperSettings = () => {
         <h2 className="section-title">Personal Access Token</h2>
         <p className="section-description">Use this token to authenticate with our CLI tool.</p>
 
-        <button className="generate-token-btn" onClick={getToken} disabled={loading}>
+        {/* Generate token button – MUI Button */}
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={getToken}
+          disabled={loading}
+          sx={{ mb: 2, width: '100%' }}
+        >
           {loading ? 'Generating Token…' : 'Generate Personal Access Token'}
-        </button>
+        </Button>
 
         {error && <div className="error-message">{error}</div>}
 
@@ -34,17 +43,26 @@ const DeveloperSettings = () => {
               <code className="token-text">
                 {showToken ? token : '••••••••••••••••••••'}
               </code>
-              <button className="toggle-visibility-btn" onClick={() => setShowToken(!showToken)}>
+              {/* Toggle visibility – MUI Button */}
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={() => setShowToken(!showToken)}
+                sx={{ ml: 1 }}
+              >
                 {showToken ? 'Hide' : 'Show'}
-              </button>
+              </Button>
             </div>
-            <button 
-              className="copy-token-btn" 
+            {/* Copy token – MUI Button */}
+            <Button
+              variant="contained"
+              color="secondary"
               onClick={handleCopyToken}
               disabled={isCopied}
+              sx={{ mt: 1, width: '100%' }}
             >
               {isCopied ? 'Copied!' : 'Copy to Clipboard'}
-            </button>
+            </Button>
           </div>
         )}
       </div>

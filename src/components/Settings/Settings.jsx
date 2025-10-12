@@ -1,7 +1,10 @@
+// components/Settings/Settings.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DeveloperSettings from './DeveloperSettings';
 import './Settings.css';
+import { IconButton, List, ListItemButton, ListItemText } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const Settings = () => {
   const navigate = useNavigate();
@@ -11,21 +14,28 @@ const Settings = () => {
     <div className="settings-view">
       <header className="settings-header">
         <h1>Settings</h1>
-        <button className="close-btn" onClick={() => navigate(-1)}>
-          ← Back
-        </button>
+        {/* MUI back button */}
+        <IconButton
+          aria-label="Back"
+          onClick={() => navigate(-1)}
+          size="large"
+        >
+          <ArrowBackIcon />
+        </IconButton>
       </header>
 
       <div className="settings-container">
-        {/* Navigation pane on the left */}
+        {/* Navigation pane on the left – now MUI List */}
         <nav className="settings-nav">
-          <button 
-            className={`nav-item ${activeSection === 'developer' ? 'active' : ''}`}
-            onClick={() => setActiveSection('developer')}
-          >
-            Developer Settings
-          </button>
-          {/* Add more navigation items here as needed */}
+          <List component="nav" disablePadding>
+            <ListItemButton
+              selected={activeSection === 'developer'}
+              onClick={() => setActiveSection('developer')}
+            >
+              <ListItemText primary="Developer Settings" />
+            </ListItemButton>
+            {/* Add more navigation items here as needed */}
+          </List>
         </nav>
 
         {/* Main content area on the right */}

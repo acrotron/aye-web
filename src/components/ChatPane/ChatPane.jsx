@@ -1,6 +1,6 @@
 import React from 'react';
 import { useChatContext } from '../../context/ChatContext';
-import ChatHeader from '../ChatHeader/ChatHeader';
+// Header removed – the title is no longer displayed in the central pane
 import MessagesContainer from '../MessagesContainer/MessagesContainer';
 import ChatInput from '../ChatInput/ChatInput';
 import './ChatPane.css';
@@ -11,7 +11,7 @@ const ChatPane = ({ style }) => {
 
   return (
     <div className="chat-pane" style={style}>
-      <ChatHeader session={currentSession} />
+      {/* Header removed */}
       <MessagesContainer />
       <ChatInput onMessageSubmitted={sendMessage} />
     </div>
@@ -19,4 +19,3 @@ const ChatPane = ({ style }) => {
 };
 
 export default ChatPane;
-

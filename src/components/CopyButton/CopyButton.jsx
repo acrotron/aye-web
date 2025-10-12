@@ -1,7 +1,15 @@
-
+// components/CopyButton/CopyButton.jsx
 import React, { useState } from 'react';
-import './CopyButton.css';
+import { IconButton, Tooltip } from '@mui/material';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import CheckIcon from '@mui/icons-material/Check';
 
+/**
+ * MUI‑styled copy‑to‑clipboard button.
+ * Props:
+ *   - content:   text to copy to the clipboard
+ *   - className: optional class name for additional styling (passed to `sx`)
+ */
 const CopyButton = ({ content, className = '' }) => {
   const [copied, setCopied] = useState(false);
 
@@ -16,23 +24,23 @@ const CopyButton = ({ content, className = '' }) => {
   };
 
   return (
-    <button
-      className={`copy-btn ${className} ${copied ? 'copied' : ''}`}
-      onClick={handleCopy}
-      title={copied ? 'Copied!' : 'Copy to clipboard'}
-    >
-      {copied ? (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <polyline points="20,6 9,17 4,12"></polyline>
-        </svg>
-      ) : (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-        </svg>
-      )}
-      <span className="copy-btn-text">{copied ? 'Copied!' : 'Copy'}</span>
-    </button>
+    <Tooltip title={copied ? 'Copied!' : 'Copy to clipboard'}>
+      <IconButton
+        onClick={handleCopy}
+        size="small"
+        // Preserve any external className via sx (MUI prefers sx over className for styling)
+        sx={{ ...(className && { className }) }}
+        // Change colour when copied for visual feedback
+        color={copied ? 'success' : 'inherit'}
+        aria-label={copied ? 'Copied' : 'Copy'}
+      >
+        {copied ? (
+          <CheckIcon fontSize="small" />
+        ) : (
+          <ContentCopyIcon fontSize="small" />
+        )}
+      </IconButton>
+    </Tooltip>
   );
 };
 

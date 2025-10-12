@@ -1,23 +1,33 @@
-import { useState, useRef, useEffect } from 'react';
-import './ChatInput.css';
+// components/ChatInput/ChatInput.jsx
+import { useState, useRef, useEffect } from "react";
+import { Box, TextField, IconButton, Tooltip } from "@mui/material";
 
+/**
+ * Chat input component – now fully styled with MUI controls.
+ *
+ * Behaviour:
+ *   • Multiline TextField that grows up to `maxRows` (5).
+ *   • `Enter` (without Shift) sends the message.
+ *   • Send button is an MUI IconButton with the same SVG icon.
+ */
 function ChatInput({ onMessageSubmitted }) {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const textareaRef = useRef(null);
-  const maxLines = 5;
-  const lineHeight = 24;
+  const maxRows = 5; // matches previous maxLines
 
+  // Adjust height on mount – same effect as before (keeps auto‑grow).
   useEffect(() => {
-    adjustTextareaHeight();
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+    }
   }, []);
 
   const onInput = (e) => {
     setMessage(e.target.value);
-    adjustTextareaHeight();
   };
 
   const onKeyDown = (event) => {
-    if (event.key === 'Enter' && !event.shiftKey) {
+    if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
       sendMessage();
     }
@@ -26,54 +36,79 @@ function ChatInput({ onMessageSubmitted }) {
   const sendMessage = () => {
     if (message.trim()) {
       onMessageSubmitted(message.trim());
-      setMessage('');
-      setTimeout(adjustTextareaHeight, 0);
-    }
-  };
-
-  const adjustTextareaHeight = () => {
-    const textarea = textareaRef.current;
-    if (!textarea) return;
-
-    textarea.style.height = 'auto';
-    const contentHeight = textarea.scrollHeight;
-    const minHeight = 40;
-    const maxHeight = maxLines * lineHeight + 16;
-
-    if (contentHeight <= maxHeight) {
-      textarea.style.height = Math.max(contentHeight, minHeight) + 'px';
-      textarea.classList.remove('scrollable');
-    } else {
-      textarea.style.height = maxHeight + 'px';
-      textarea.classList.add('scrollable');
+      setMessage("");
     }
   };
 
   return (
-    <div className="chat-input-container">
-      <textarea
-        ref={textareaRef}
-        className="chat-input"
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        gap: 1,
+        p: 2,
+        backgroundColor: "var(--chat-bg)",
+      }}
+    >
+      <TextField
+        inputRef={textareaRef}
+        multiline
+        minRows={1}
+        maxRows={maxRows}
+        variant="outlined"
         placeholder="Type your message..."
         value={message}
         onChange={onInput}
         onKeyDown={onKeyDown}
-        rows="1"
+        fullWidth
+        sx={{
+          "& .MuiOutlinedInput-root": {
+            borderColor: "var(--chat-input-border)",
+            backgroundColor: "var(--chat-input-bg)",
+            borderRadius: 2,
+          },
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: "var(--chat-input-border)",
+          },
+          "&:hover .MuiOutlinedInput-root": {
+            borderColor: "var(--chat-input-border)",
+          },
+          "& .MuiInputBase-input": {
+            fontSize: "0.95rem", // ← increased a hair
+            lineHeight: 1.5,
+          },
+        }}
       />
-      <button
-        className="send-button"
-        onClick={sendMessage}
-        disabled={!message.trim()}
-        type="button"
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <line x1="22" y1="2" x2="11" y2="13"></line>
-          <polygon points="22,2 15,22 11,13 2,9"></polygon>
-        </svg>
-      </button>
-    </div>
+      <Tooltip title="Send">
+        <IconButton
+          onClick={sendMessage}
+          disabled={!message.trim()}
+          sx={{
+            width: 40,
+            height: 40,
+            bgcolor: "var(--primary-bg)",
+            color: "#fff",
+            "&:hover": { bgcolor: "var(--primary-bg-hover)" },
+            mb: 1, // ← push button up ~10px from the bottom
+          }}
+          aria-label="send"
+        >
+          {/* Same SVG as before */}
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22,2 15,22 11,13 2,9"></polygon>
+          </svg>
+        </IconButton>
+      </Tooltip>
+    </Box>
   );
 }
 
 export default ChatInput;
-

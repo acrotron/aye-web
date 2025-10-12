@@ -11,7 +11,7 @@ import AppContent from './components/AppContent';
 import './app.css';
 
 function App({ user, signOut }) {
-  const title = 'AI Assistant';
+  const title = 'Aye Chat';
   const chatService = useRef(new ChatService(new HuggingfaceService()));
   const resizablePanes = useResizablePanes();
 

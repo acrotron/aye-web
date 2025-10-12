@@ -10,47 +10,6 @@ import ChatSessionSettingsDrawer from "./ChatSessionSettingsDrawer/ChatSessionSe
 const AppContent = ({ title, resizablePanes, user, signOut }) => {
   const { showSettings, setShowSettings, activeSettingsSection } = useChatContext();
 
-  // -----------------------------------------------------------------
-  // 1️⃣ Settings drawer – slides over the main UI
-  // -----------------------------------------------------------------
-  if (showSettings) {
-    return (
-      <>
-        <div className={`app-container ${resizablePanes.isResizing ? "resizing" : ""}`}>
-          {/* Nav pane (left) */}
-          <div className="nav-pane" style={resizablePanes.getNavPaneStyle()}>
-            <NavPane user={user} signOut={signOut} title={title} />
-          </div>
-
-          {/* Resize handle between nav and chat */}
-          <ResizeHandle
-            isResizing={resizablePanes.isResizing && resizablePanes.resizeType === "nav"}
-            onResizeStart={resizablePanes.onNavResizeStart}
-          />
-
-          {/* Central chat pane */}
-          <ChatPane style={resizablePanes.getChatPaneStyle()} />
-
-          {/* Resize handle between chat and info */}
-          <ResizeHandle
-            isResizing={resizablePanes.isResizing && resizablePanes.resizeType === "info"}
-            onResizeStart={resizablePanes.onInfoResizeStart}
-          />
-
-          {/* Additional info pane (right) */}
-          <InfoPane style={resizablePanes.getInfoPaneStyle()} />
-        </div>
-        <ChatSessionSettingsDrawer 
-          onClose={() => setShowSettings(false)}
-          initialSection={activeSettingsSection}
-        />
-      </>
-    );
-  }
-
-  // -----------------------------------------------------------------
-  // 2️⃣ Normal three‑pane UI (unchanged)
-  // -----------------------------------------------------------------
   return (
     <div className={`app-container ${resizablePanes.isResizing ? "resizing" : ""}`}>
       {/* Nav pane (left) */}
@@ -75,6 +34,13 @@ const AppContent = ({ title, resizablePanes, user, signOut }) => {
 
       {/* Additional info pane (right) */}
       <InfoPane style={resizablePanes.getInfoPaneStyle()} />
+
+      {/* Settings drawer – always mounted, visibility controlled via `open` */}
+      <ChatSessionSettingsDrawer
+        open={showSettings}
+        onClose={() => setShowSettings(false)}
+        initialSection={activeSettingsSection}
+      />
     </div>
   );
 };
