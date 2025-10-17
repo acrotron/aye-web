@@ -38,8 +38,7 @@ const AuthGate = ({ title, resizablePanes }) => {
       setLoadingUser(true);
       try {
         const session = await fetchAuthSession();
-        // Prefer the Cognito "sub" claim; fall back to username if needed.
-        console.log("session: ", session);
+        // Fall back to the Cognito "sub" claim; prefer the username.
         const sub = session.tokens?.idToken?.payload?.sub;
         //const username = session.tokens?.accessToken?.payload?.username || session.username;
         const username = session.tokens?.signInDetails?.loginId || session.username;
@@ -87,7 +86,6 @@ const AuthGate = ({ title, resizablePanes }) => {
 
   // Prefer the resolved user; fall back to the raw `user` object if it exists.
   const activeUser = resolvedUser || user;
-  console.log("activeUser:", activeUser);
 
   return (
     <ChatProvider
