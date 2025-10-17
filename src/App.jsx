@@ -38,13 +38,16 @@ const AuthGate = ({ title, resizablePanes }) => {
       setLoadingUser(true);
       try {
         const session = await fetchAuthSession();
+
         // Fall back to the Cognito "sub" claim; prefer the username.
-        const sub = session.tokens?.idToken?.payload?.sub;
+        //const sub = session.tokens?.idToken?.payload?.sub;
         //const username = session.tokens?.accessToken?.payload?.username || session.username;
         const username = session.tokens?.signInDetails?.loginId || session.username;
-        const id = username || sub || "unknown";
+        //const id = username || sub || "unknown";
+        const id = username || "unknown";
         // Build a minimal user object compatible with ChatContext's logic.
-        setResolvedUser({ username: id, attributes: { sub: id } });
+        setResolvedUser({ signInDetails: { loginId: id }, username: id, attributes: { sub: id } });
+
       } catch (e) {
         console.warn("Failed to fetch auth session:", e);
         // If we cannot resolve, keep the "Guest" fallback.
