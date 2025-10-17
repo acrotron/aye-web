@@ -98,6 +98,28 @@ body {
   --chat-input-bg: #f5f7fa; /* updated to requested dark background */
 }
 
+/* Light‑theme overrides – the same variables are swapped when the body gets the .light-theme class */
+.light-theme {
+  --bg-default: #ffffff;
+  --bg-paper: #f5f5f5;
+  --text-primary: #212529;
+  --text-secondary: #495057;
+  --nav-bg: #f8f9fa;
+  --nav-header-bg: #e9ecef;
+  --nav-header-border: #ced4da;
+  --info-bg: #f8f9fa;
+  --info-header-bg: #e9ecef;
+  --info-header-border: #ced4da;
+  --chat-bg: #ffffff;
+  --primary-bg: #1976d2;
+  --primary-bg-hover: #1565c0;
+  --secondary-bg: #6c757d;
+  --secondary-bg-hover: #5a6268;
+  --user-msg-bg: #e9ecef;
+  --bot-msg-bg: #ffffff;
+  --bot-msg-color: #212529;
+}
+
 /* Main App Container */
 .app-container {
   display: flex;
@@ -156,101 +178,96 @@ body {
   height: 8px;
   border-radius: 50%;
   background-color: var(--typing-indicator);
-  animation: typing 1.4s infinite ease-in-out both;
+  animation: typing 1.4s infinite ease-in-out;
 }
 
 .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
 .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
 
 @keyframes typing {
-  0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
-  40% { transform: scale(1); opacity: 1; }
+  0%,80%,100% { transform: scale(0); opacity:0.5; }
+  40% { transform: scale(1); opacity:1; }
 }
 
-/* Scrollbar styling – generic */
-.messages-container::-webkit-scrollbar,
-.nav-content::-webkit-scrollbar,
-.info-content::-webkit-scrollbar {
-  width: 6px;
+/* ----------------------------------------------------------
+   Amplify Authenticator – make it follow the same theme
+   ---------------------------------------------------------- */
+/* Container background */
+.amplify-authenticator {
+  background-color: var(--bg-default) !important;
+  color: var(--text-primary) !important;
 }
 
-.messages-container::-webkit-scrollbar-track,
-.nav-content::-webkit-scrollbar-track,
-.info-content::-webkit-scrollbar-track {
-  background: var(--scrollbar-track);
+/* Form elements – inputs, selects, textarea */
+.amplify-input,
+.amplify-select,
+.amplify-textarea {
+  background-color: var(--bg-paper) !important;
+  border: 1px solid var(--nav-header-border) !important;
+  color: var(--text-primary) !important;
 }
 
-.messages-container::-webkit-scrollbar-thumb,
-.nav-content::-webkit-scrollbar-thumb,
-.info-content::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
-  border-radius: 3px;
+.amplify-input:focus,
+.amplify-select:focus,
+.amplify-textarea:focus {
+  border-color: var(--primary-bg) !important;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.25) !important;
 }
 
-.messages-container::-webkit-scrollbar-thumb:hover,
-.nav-content::-webkit-scrollbar-thumb:hover,
-.info-content::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-hover);
+/* Labels */
+.amplify-label {
+  color: var(--text-secondary) !important;
 }
 
-/* Dark scrollbar for nav pane */
-.nav-content::-webkit-scrollbar-track {
-  background: var(--nav-scrollbar-track);
+/* Primary button (Sign In / Sign Up) */
+.amplify-button {
+  background-color: var(--primary-bg) !important;
+  color: #fff !important;
+  border: none !important;
 }
 
-.nav-content::-webkit-scrollbar-thumb {
-  background: var(--nav-scrollbar-thumb);
+.amplify-button:hover {
+  background-color: var(--primary-bg-hover) !important;
 }
 
-.nav-content::-webkit-scrollbar-thumb:hover {
-  background: var(--nav-scrollbar-thumb-hover);
+/* Disabled button */
+.amplify-button[disabled] {
+  background-color: var(--secondary-bg) !important;
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-/* Prevent text selection during resize */
-.app-container.resizing * {
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  pointer-events: none;
+/* Links (e.g. "Forgot password?") */
+.amplify-authenticator a {
+  color: var(--primary-bg) !important;
 }
 
-/* Allow resize handles to remain interactive during resize */
-.app-container.resizing .resize-handle {
-  pointer-events: auto;
+/* Error messages */
+.amplify-error {
+  color: var(--error-bg) !important;
+  background-color: rgba(220,53,69,0.1) !important;
+  border-radius: 4px;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
 }
 
-/* Cursor changes when resizing */
-.app-container.resizing {
-  cursor: col-resize;
+/* Light‑theme variant – Amplify picks up the same overrides when .light-theme is present */
+.light-theme .amplify-authenticator {
+  background-color: var(--bg-default) !important;
+  color: var(--text-primary) !important;
 }
 
-/* Responsive Design */
-@media (max-width: 1400px) {
-  .chat-pane { min-width: 350px; }
-  .info-pane { min-width: 250px; }
+/* Ensure the toggle button (ThemeToggle) stays visible */
+.amplify-authenticator .theme-toggle {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 }
 
-@media (max-width: 1200px) {
-  .chat-pane { min-width: 300px; }
-  .info-pane { min-width: 200px; }
-}
-
-@media (max-width: 768px) {
-  .app-container { flex-direction: column; height: 100vh; }
-  .nav-pane { width: 100% !important; height: auto; max-height: 150px; flex-shrink: 0; }
-  .chat-pane { flex: 1; min-width: auto; width: 100% !important; }
-  .resize-handle { display: none; }
-  .info-pane { display: none; }
-  .chat-header h1 { font-size: 1rem; }
-  .message-content { max-width: 85%; }
-}
-
+/* Responsive tweaks – keep the form width reasonable */
 @media (max-width: 480px) {
-  .nav-content h3 { font-size: 0.8rem; }
-  .session-name { font-size: 0.8rem; }
-  .message-content { padding: 0.6rem 0.8rem; font-size: 0.9rem; }
-  .input-container { padding: 0.8rem 1rem; }
-  .message-input { padding: 0.6rem 0.8rem; font-size: 0.9rem; }
-  .send-btn { padding: 0.6rem 1rem; font-size: 0.9rem; }
+  .amplify-authenticator {
+    width: 100% !important;
+    padding: 0 1rem;
+  }
 }
