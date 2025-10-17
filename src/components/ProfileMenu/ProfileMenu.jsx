@@ -68,11 +68,6 @@ export const ProfileMenu = () => {
     <Box sx={{ position: 'fixed', left: 16, bottom: 16, zIndex: 1300 }}>
       {/* Avatar + toggle button */}
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-        <Avatar
-          src="/logo-192x192.png"
-          alt="App logo"
-          sx={{ width: 32, height: 32 }}
-        />
         <Button
           //variant="contained"
           endIcon={open ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}

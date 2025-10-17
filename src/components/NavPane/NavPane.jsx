@@ -1,5 +1,6 @@
 // components/NavPane/NavPane.jsx
 import React from "react";
+import Avatar from '@mui/material/Avatar';
 import { useChatContext } from "../../context/ChatContext";
 import { ProfileMenu } from "../../components/ProfileMenu/ProfileMenu";
 import SessionList from "../SessionList/SessionList"; // MUI‑styled session list
@@ -29,6 +30,11 @@ const NavPane = ({ title }) => {
   return (
     <aside className="nav-pane">
       <header className="nav-header">
+        <Avatar
+          src="/logo-192x192.png"
+          alt="App logo"
+          sx={{ width: 32, height: 32 }}
+        />
         <h2>{title}</h2>
         {/* New‑chat button – now an MUI Button */}
         <Button
