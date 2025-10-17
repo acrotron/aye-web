@@ -63,9 +63,9 @@ const Message = ({ message }) => {
           boxShadow: 1,
         }}
       >
-        <CardContent sx={{ p: 2, position: 'relative' }}>
+        <CardContent sx={{ pb: 0, position: 'relative' }}>
           <Typography
-            component="div"
+            component="div" //Div inherits 2px padding on all sides, so bottom padding is set in CardContext sx
             variant="body2"
             sx={{ lineHeight: 1.5, wordBreak: 'break-word' }}
             dangerouslySetInnerHTML={parseMessageText(message.text)}
