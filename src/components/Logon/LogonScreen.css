@@ -1,0 +1,31 @@
+/* src/components/Logon/LogonScreen.css */
+
+/* Full‑screen container – dark background */
+.logon-screen {
+  background-color: var(--nav-bg); /* matches the dark navigation pane */
+}
+
+/* Card – dark background with readable text */
+.logon-card {
+  background-color: var(--nav-header-bg); /* dark header colour */
+  color: var(--text-primary); /* default text colour */
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+.logon-title {
+  color: var(--text-primary);
+}
+
+.logon-subtitle {
+  color: var(--text-secondary);
+}
+
+.logon-button {
+  background-color: var(--primary-bg);
+  color: #fff;
+}
+
+.logon-button:hover {
+  background-color: var(--primary-bg-hover);
+}

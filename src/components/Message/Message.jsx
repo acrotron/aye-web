@@ -2,7 +2,7 @@
 import React from 'react';
 import { marked } from 'marked';
 import CopyButton from '../CopyButton/CopyButton';
-import { Box, Card, CardContent, Typography } from '@mui/material';
+import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
 
 /**
  * Renders a single chat message.
@@ -63,34 +63,41 @@ const Message = ({ message }) => {
           boxShadow: 1,
         }}
       >
-        <CardContent sx={{ p: 2, position: 'relative' }}>
+        <CardContent sx={{ pb: 0, position: 'relative' }}>
           <Typography
-            component="div"
+            component="div" //Div inherits 2px padding on all sides, so bottom padding is set in CardContext sx
             variant="body2"
             sx={{ lineHeight: 1.5, wordBreak: 'break-word' }}
             dangerouslySetInnerHTML={parseMessageText(message.text)}
           />
-          {/* Show copy button only for assistant messages (as before) */}
-          {message.sender === 'bot' && (
-            <Box sx={{ position: 'absolute', top: 8, right: 8 }}>
-              <CopyButton content={message.text} />
-            </Box>
-          )}
         </CardContent>
-        <Box
+        <Grid
+          container
+          direction='Row'
           sx={{
-            textAlign: 'right',
-            fontSize: '0.75rem',
-            opacity: 0.6,
-            px: 2,
+            justifyContent: isUser ? 'right' : 'space-between', //Separates copy button and time for bot, moves time to right for user (since there's no copy button for user)
+            alignItems: 'center', //'center' or 'end'? end aligns time to button but center might look better
+            px: 1,
             pb: 1,
           }}
         >
-          {new Date(message.timestamp).toLocaleTimeString([], {
+        {/* Show copy button only for assistant messages (as before) */}
+          {message.sender === 'bot' && (
+              <CopyButton 
+                  content={message.text}/>
+              )}
+          <Typography
+            variant="body3" 
+            sx={{
+              fontSize: '0.75rem',
+              opacity: 0.6,
+              px: 1,
+            }}
+          >{new Date(message.timestamp).toLocaleTimeString([], {
             hour: '2-digit',
             minute: '2-digit',
-          })}
-        </Box>
+          })}</Typography>
+        </Grid>
       </Card>
     </Box>
   );
