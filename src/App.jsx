@@ -11,6 +11,7 @@ import { HuggingfaceService } from "./services/huggingface.service";
 import { useResizablePanes } from "./hooks/useResizablePanes";
 import AppContent from "./components/AppContent";
 import LogonScreen from "./components/Logon/LogonScreen";
+import Welcome from "./components/Welcome/Welcome"; // <-- new import
 
 import "./app.css";
 
@@ -38,19 +39,11 @@ const AuthGate = ({ title, resizablePanes }) => {
       setLoadingUser(true);
       try {
         const session = await fetchAuthSession();
-
-        // Fall back to the Cognito "sub" claim; prefer the username.
-        //const sub = session.tokens?.idToken?.payload?.sub;
-        //const username = session.tokens?.accessToken?.payload?.username || session.username;
         const username = session.tokens?.signInDetails?.loginId || session.username;
-        //const id = username || sub || "unknown";
         const id = username || "unknown";
-        // Build a minimal user object compatible with ChatContext's logic.
         setResolvedUser({ signInDetails: { loginId: id }, username: id, attributes: { sub: id } });
-
       } catch (e) {
         console.warn("Failed to fetch auth session:", e);
-        // If we cannot resolve, keep the "Guest" fallback.
         setResolvedUser(null);
       } finally {
         setLoadingUser(false);
@@ -63,14 +56,13 @@ const AuthGate = ({ title, resizablePanes }) => {
   // Render based on auth status.
   // ---------------------------------------------------------------
   if (authStatus === "configuring") {
-    return null; // or a loader if you prefer
+    return null;
   }
 
   if (authStatus !== "authenticated") {
     return <LogonScreen />;
   }
 
-  // Authenticated but still waiting for the async user‑resolution.
   if (loadingUser || (!resolvedUser && user === undefined)) {
     return (
       <Box
@@ -87,7 +79,6 @@ const AuthGate = ({ title, resizablePanes }) => {
     );
   }
 
-  // Prefer the resolved user; fall back to the raw `user` object if it exists.
   const activeUser = resolvedUser || user;
 
   return (
@@ -96,19 +87,7 @@ const AuthGate = ({ title, resizablePanes }) => {
       signOut={signOut}
       chatService={new ChatService(new HuggingfaceService())}
     >
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <AppContent
-              title={title}
-              resizablePanes={resizablePanes}
-              user={activeUser}
-              signOut={signOut}
-            />
-          }
-        />
-      </Routes>
+      <AppContent title={title} resizablePanes={resizablePanes} user={activeUser} signOut={signOut} />
     </ChatProvider>
   );
 };
@@ -120,7 +99,12 @@ function App() {
   return (
     // Authenticator.Provider supplies the auth context without rendering the default UI.
     <Authenticator.Provider>
-      <AuthGate title={title} resizablePanes={resizablePanes} />
+      <Routes>
+        {/* Public route – no auth required */}
+        <Route path="/welcome" element={<Welcome />} />
+        {/* All other routes go through AuthGate */}
+        <Route path="/*" element={<AuthGate title={title} resizablePanes={resizablePanes} />} />
+      </Routes>
     </Authenticator.Provider>
   );
 }

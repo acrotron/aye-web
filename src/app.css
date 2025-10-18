@@ -271,3 +271,13 @@ body {
     padding: 0 1rem;
   }
 }
+
+/* Header – only the welcome page sticky header should have top margin */
+.sticky-header {
+  margin-top: 0; /* remove extra space */
+}
+
+/* Ensure NavPane header has no top margin (override any global rule) */
+.nav-header {
+  margin-top: 0 !important;
+}

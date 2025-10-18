@@ -3,3 +3,6 @@ aws-exports.js
 
 scp_publish.sh
 
+*.themed
+
+
