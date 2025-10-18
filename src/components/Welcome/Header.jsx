@@ -1,4 +1,6 @@
+// src/components/Welcome/Header.jsx
 import React from 'react';
+import './Header.css';
 
 const externalLinks = [
   { label: 'GitHub', href: 'https://github.com/acrotron/aye-chat' },
@@ -8,7 +10,7 @@ const externalLinks = [
 
 function Header() {
   return (
-    <nav className="sticky-header">
+    <nav className="welcome-header">
       <a href="/" className="logo-wrapper">
         <img src="/images/aye-chat-logo-full-cropped.png" alt="Aye‑Chat logo" className="h-18 w-auto" />
       </a>

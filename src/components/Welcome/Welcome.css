@@ -1,6 +1,8 @@
 /* src/components/Welcome/Welcome.css */
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;500;600;700&display=swap');
-@import 'tailwindcss';
+
+/* Bring in Tailwind utility classes globally – safe because we only use them via @apply which we have now removed */
+@tailwind utilities;
 
 @theme {
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
@@ -14,121 +16,148 @@
     url('/images/noise.png');
 }
 
-/* Apply the monospaced font only inside the Welcome page */
+/* Scoped Welcome page container */
 .welcome-page {
   font-family: var(--font-mono);
   line-height: 1.6;
   color: var(--text-primary);
+  background: var(--bg-gradient);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  min-height: 100vh;
+  text-align: center;
+  width: 100%;
+  /* fallback monospace stack for non‑welcome pages */
+  font-family: ui-monospace, Menlo, Consolas, 'Courier New', monospace;
 }
 
-/* ---------- Increased font sizes (except footer) ---------- */
+/* ---------- Font‑size tweaks (except footer) ---------- */
 .welcome-page h1 {
-  /* original ~2.5rem */
-  font-size: 3rem; /* a bit larger */
+  /* Explicit size – replaces former @apply text-4xl */
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .welcome-page h2 {
-  font-size: 2.4rem; /* previously 2rem */
+  /* Explicit size – replaces former @apply text-2xl */
+  font-size: 2.4rem;
 }
 
 .welcome-page p,
 .welcome-page .tagline {
-  font-size: 1.2rem; /* previously 1.25rem/1rem equivalents */
+  font-size: 1.2rem;
 }
 
 .welcome-page .cta-wrapper {
-  font-size: 1.75rem; /* previously 1.55rem */
+  font-size: 1.75rem;
 }
 
 /* Feature cards – increase title and description */
 .welcome-page .card h3 {
-  font-size: 1.4rem; /* previously ~1.2rem */
+  font-size: 1.4rem;
 }
 
 .welcome-page .card p {
-  font-size: 1.05rem; /* previously .95rem */
+  font-size: 1.05rem;
 }
 
 /* Keep footer text small (unchanged) */
 .welcome-page footer p {
-  font-size: 0.85rem; /* intentionally left as‑is */
+  font-size: 0.85rem;
 }
 
-@layer base {
-  h1 {
-    @apply text-4xl font-bold tracking-tight sm:text-5xl;
-    /* base size overridden above */
-  }
-
-  h2 {
-    @apply text-2xl font-bold sm:text-3xl;
-    /* base size overridden above */
-  }
-
-  a:not(.btn) {
-    @apply underline transition hover:opacity-80;
-  }
-
-  pre {
-    @apply p-6 overflow-x-auto rounded-lg;
-    font-family: var(--font-mono);
-  }
-
-  :not(pre)>code {
-    @apply px-1 py-0.5 font-mono rounded bg-gray-900 text-primary;
-    font-size: 0.9em;
-    font-family: var(--font-mono);
-  }
+/* ---------- Direct CSS equivalents for former @apply rules ---------- */
+/* Links */
+.welcome-page a:not(.btn) {
+  text-decoration: underline;
+  transition: opacity 0.2s ease;
+}
+.welcome-page a:not(.btn):hover {
+  opacity: 0.8;
 }
 
-@layer components {
-  .markdown {
-    > * {
-      @apply my-6;
-    }
+/* <pre> blocks */
+.welcome-page pre {
+  padding: 1.5rem;            /* p-6 */
+  overflow-x: auto;
+  border-radius: 0.5rem;      /* rounded-lg */
+  font-family: var(--font-mono);
+}
 
-    :where(h1, h2) {
-      @apply mt-12 mb-6;
-    }
+/* Inline <code> */
+.welcome-page :not(pre) > code {
+  padding: 0.125rem 0.25rem;  /* py-0.5 px-1 */
+  font-family: var(--font-mono);
+  border-radius: 0.25rem;     /* rounded */
+  background: #111827;        /* bg-gray-900 */
+  color: var(--text-primary);/* text-primary */
+  font-size: 0.9em;
+}
 
-    > :first-child {
-      @apply mt-0;
-    }
+/* Markdown helper – replaces .markdown utilities */
+.welcome-page .markdown > * {
+  margin: 1.5rem 0;           /* my-6 */
+}
+.welcome-page .markdown :where(h1, h2) {
+  margin-top: 3rem;           /* mt-12 */
+  margin-bottom: 1.5rem;      /* mb-6 */
+}
+.welcome-page .markdown > :first-child {
+  margin-top: 0;
+}
+.welcome-page .markdown > :last-child {
+  margin-bottom: 0;
+}
 
-    > :last-child {
-      @apply mb-0;
-    }
+/* Button style – simple replica of previous .btn */
+.welcome-page .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--color-primary);
+  color: var(--color-primary-content);
+  cursor: pointer;
+  text-align: center;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0.875rem 1.25rem; /* var(--btn-py) var(--btn-px) default */
+  font-size: 0.875rem;      /* var(--btn-font-size) default */
+  border-radius: 0.25rem;    /* var(--btn-border-radius) */
+  transition: background 0.2s ease;
+}
+.welcome-page .btn:hover {
+  background: var(--color-primary) 85%;
+}
+.welcome-page .btn:disabled {
+  color: #9ca3af;            /* text-gray-400 */
+  background: #374151;       /* bg-gray-700 */
+}
+
+.welcome-page .btn-lg {
+  font-size: 1.125rem;       /* --btn-font-size */
+  padding: 1.125rem 1.5rem;  /* --btn-py --btn-px */
+}
+
+/* Responsive overrides – explicit sizes (no Tailwind variants) */
+@media (min-width: 640px) {
+  .welcome-page h1 {
+    font-size: 3rem; /* text-5xl */
   }
-
-  .btn {
-    @apply inline-flex items-center justify-center gap-2 bg-primary text-primary-content cursor-pointer text-center font-semibold no-underline transition-colors;
-    padding: var(--btn-py, 0.875rem) var(--btn-px, 1.25rem);
-    font-size: var(--btn-font-size, 0.875rem);
-    border-radius: var(--btn-border-radius, 0.25rem);
-
-    &:hover {
-      @apply bg-primary/85;
-    }
-
-    &:disabled {
-      @apply text-gray-400 bg-gray-700;
-    }
-  }
-
-  .btn-lg {
-    --btn-font-size: 1.125rem;
-    --btn-px: 1.5rem;
-    --btn-py: 1.125rem;
+  .welcome-page h2 {
+    font-size: 1.875rem; /* text-3xl */
   }
 }
 
 /* CTA link (the button) */
-.cta-wrapper {
+.welcome-page .cta-wrapper {
   margin: 2rem 0;
   text-align: center;
 }
 
-.cta-link {
+.welcome-page .cta-link {
   display: inline-block;
   background: none;
   color: #036679;
@@ -137,112 +166,37 @@
 }
 
 /* Hover / focus state */
-.cta-link:hover,
-.cta-link:focus-visible {
+.welcome-page .cta-link:hover,
+.welcome-page .cta-link:focus-visible {
   transform: translateY(-2px);
 }
 
 /* Visible outline for keyboard users */
-.cta-link:focus-visible {
+.welcome-page .cta-link:focus-visible {
   outline: 2px solid #fff;
   outline-offset: 2px;
 }
 
 /* Small arrow after the word “here” */
-.cta-link::after {
+.welcome-page .cta-link::after {
   content: " →";
   color: #036679;
   font-size: 2rem;
   transition: margin-left .15s ease;
 }
 
-.cta-link:hover::after,
-.cta-link:focus-visible::after {
+.welcome-page .cta-link:hover::after,
+.welcome-page .cta-link:focus-visible::after {
   margin-left: 0.2rem;
 }
 
-/* Header */
-.sticky-header {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 0;
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  background: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .08);
-  border-bottom: 1px solid rgba(0, 0, 0, .1);
-}
-
-.logo-wrapper {
-  flex-shrink: 0;
-  padding-top: .5rem;
-  padding-left: 1.5rem;
-}
-
-.external-links {
-  display: flex;
-  gap: 1rem;
-  padding-right: 1rem;
-  padding-top: 1rem;
-}
-
-.link {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
-  transition: background 0.2s ease;
-  font-family: var(--font-mono); /* use Ubuntu Mono for header links */
-}
-
-.link:hover {
-  background: rgba(0, 0, 0, 0.05);
-}
-
-body,
-html {
-  background: var(--bg-gradient);
-  color: var(--text-primary);
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: space-between;
-  min-height: 100vh;
-  text-align: center;
-  width: 100%;
-  /* Keep the global font for non‑welcome pages */
-  font-family: ui-monospace, Menlo, Consolas, 'Courier New', monospace;
-}
-
-header {
+/* Header – scoped */
+.welcome-page header {
   margin-top: 4rem;
 }
 
-h1 {
-  font-size: 3.5rem;
-  margin-bottom: 0.5rem;
-}
-
-p tagline {
-  font-size: 1.25rem;
-  opacity: 0.9;
-  margin-bottom: 2rem;
-}
-
-.cta {
-  display: inline-block;
-  padding: 0.9rem 2rem;
-  background: var(--accent);
-  color: #fff;
-  border-radius: 0.5rem;
-  text-decoration: none;
-  font-weight: 600;
-  transition: background 0.2s ease;
-}
-
-.features {
+/* Features grid */
+.welcome-page .features {
   display: grid;
   gap: 1.5rem;
   max-width: 900px;
@@ -251,14 +205,8 @@ p tagline {
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
-footer {
-  padding: 2rem 0;
-  font-size: 0.85rem;
-  opacity: 0.7;
-}
-
 /* Make the main content area scrollable on the Welcome page */
-main.grow {
-  overflow-y: auto;   /* enable vertical scrolling */
-  flex: 1;            /* ensure it can expand to fill the container */
+.welcome-page main.grow {
+  overflow-y: auto;
+  flex: 1;
 }

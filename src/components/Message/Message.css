@@ -10,20 +10,44 @@
   max-width: 85%;
   padding: 0.8rem 1rem;
   border-radius: 12px;
-  font-size: 1rem; /* ← increased a hair */
-  line-height: 1.5;
+  font-size: 0.95rem; /* slightly smaller for better density */
+  line-height: 1.6;   /* more natural line spacing */
   box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
-.user-message .message-content {
-  background-color: var(--user-msg-bg);
-  border: 1px solid var(--user-msg-border);
+/* Paragraph and list spacing – prevents crowding */
+.message-content p {
+  margin: 0 0 0.8rem 0;
+}
+.message-content ul,
+.message-content ol {
+  margin: 0 0 0.8rem 0;
+  padding-left: 1.5rem;
+}
+.message-content li {
+  margin-bottom: 0.4rem;
 }
 
-.bot-message .message-content {
-  background-color: var(--bot-msg-bg);
-  color: var(--bot-msg-color);
-  border: 1px solid var(--bot-msg-border);
+/* Inline code – light background, readable colour */
+.message-content code {
+  background: var(--bg-paper);
+  color: var(--text-primary);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-family: var(--font-mono, "Monaco", "Menlo", "Ubuntu Mono", monospace);
+}
+
+/* Code blocks – use same light background, add scrolling */
+.message-content pre {
+  background: var(--bg-paper);
+  color: var(--text-primary);
+  padding: 1rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 0.8rem 0;
+  font-family: var(--font-mono, "Monaco", "Menlo", "Ubuntu Mono", monospace);
+  font-size: 0.9em;
 }
 
 .message-time {
