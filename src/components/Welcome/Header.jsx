@@ -12,7 +12,8 @@ function Header() {
   return (
     <nav className="welcome-header">
       <a href="/" className="logo-wrapper">
-        <img src="/images/aye-chat-logo-full-cropped.png" alt="Aye‑Chat logo" className="h-18 w-auto" />
+        {/* Reduced logo height – new class `logo-img` */}
+        <img src="/images/aye-chat-logo-full-cropped.png" alt="Aye Chat logo" className="logo-img" />
       </a>
       <ul className="external-links">
         {externalLinks.map((link) => (

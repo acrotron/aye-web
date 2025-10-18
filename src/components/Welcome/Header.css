@@ -21,6 +21,12 @@
   padding-left: 1.5rem;
 }
 
+/* New logo size – 3rem height, width auto‑scales */
+.welcome-header .logo-wrapper .logo-img {
+  height: 5rem;   /* ~60 px, fits well with other UI elements */
+  width: auto;
+}
+
 /* Horizontal list of external links */
 .welcome-header .external-links {
   display: flex;
@@ -37,7 +43,8 @@
   transition: background 0.2s ease;
   font-family: var(--font-mono);
   color: inherit;
-  text-decoration: none;
+  text-decoration: underline;      /* <-- added underline */
+  font-size: 1.5rem;            /* <-- increased font size */
 }
 
 .welcome-header .link:hover {

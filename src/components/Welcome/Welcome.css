@@ -1,7 +1,6 @@
 /* src/components/Welcome/Welcome.css */
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;500;600;700&display=swap');
 
-/* Bring in Tailwind utility classes globally – safe because we only use them via @apply which we have now removed */
 @tailwind utilities;
 
 @theme {
@@ -35,13 +34,11 @@
 
 /* ---------- Font‑size tweaks (except footer) ---------- */
 .welcome-page h1 {
-  /* Explicit size – replaces former @apply text-4xl */
   font-size: 3.5rem;
   margin-bottom: 0.5rem;
 }
 
 .welcome-page h2 {
-  /* Explicit size – replaces former @apply text-2xl */
   font-size: 2.4rem;
 }
 
@@ -165,19 +162,16 @@
   font-weight: 700;
 }
 
-/* Hover / focus state */
 .welcome-page .cta-link:hover,
 .welcome-page .cta-link:focus-visible {
   transform: translateY(-2px);
 }
 
-/* Visible outline for keyboard users */
 .welcome-page .cta-link:focus-visible {
   outline: 2px solid #fff;
   outline-offset: 2px;
 }
 
-/* Small arrow after the word “here” */
 .welcome-page .cta-link::after {
   content: " →";
   color: #036679;
@@ -210,3 +204,7 @@
   overflow-y: auto;
   flex: 1;
 }
+
+/* --------------------------------------------------- */
+/* Removed table‑based layout – now using MUI Box */
+/* (no .welcome-main-table or related rules are needed) */
