@@ -63,9 +63,10 @@ const Message = ({ message }) => {
           boxShadow: 1,
         }}
       >
-        <CardContent sx={{ pb: 0, position: 'relative' }}>
+        {/* Added horizontal overflow on CardContent */}
+        <CardContent sx={{ pb: 0, position: 'relative', overflowX: 'auto' }}>
           <Typography
-            component="div" //Div inherits 2px padding on all sides, so bottom padding is set in CardContext sx
+            component="div"
             variant="body2"
             sx={{ lineHeight: 1.5, wordBreak: 'break-word' }}
             dangerouslySetInnerHTML={parseMessageText(message.text)}
@@ -75,19 +76,17 @@ const Message = ({ message }) => {
           container
           direction='Row'
           sx={{
-            justifyContent: isUser ? 'right' : 'space-between', //Separates copy button and time for bot, moves time to right for user (since there's no copy button for user)
-            alignItems: 'center', //'center' or 'end'? end aligns time to button but center might look better
+            justifyContent: isUser ? 'right' : 'space-between',
+            alignItems: 'center',
             px: 1,
             pb: 1,
           }}
         >
-        {/* Show copy button only for assistant messages (as before) */}
           {message.sender === 'bot' && (
-              <CopyButton 
-                  content={message.text}/>
-              )}
+            <CopyButton content={message.text} />
+          )}
           <Typography
-            variant="body3" 
+            variant="body3"
             sx={{
               fontSize: '0.75rem',
               opacity: 0.6,

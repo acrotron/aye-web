@@ -13,6 +13,8 @@
   font-size: 0.95rem; /* slightly smaller for better density */
   line-height: 1.6;   /* more natural line spacing */
   box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  overflow-x: auto; /* keep horizontal scrolling if needed */
+  max-width: 100%;   /* allow the inner scroll area to take full width */
 }
 
 /* Paragraph and list spacing – prevents crowding */
