@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { usePersonalToken } from '../../hooks/usePersonalToken';
 import './DeveloperSettings.css';
 import { Button } from '@mui/material';
+import QuickStart from './QuickStart'; // Import the QuickStart component
 
 const DeveloperSettings = () => {
   // Hook supplies everything we need.
@@ -40,9 +41,6 @@ const DeveloperSettings = () => {
         {token && (
           <div className="token-display">
             <div className="token-value">
-              <code className="token-text">
-                {showToken ? token : '••••••••••••••••••••'}
-              </code>
               {/* Toggle visibility – MUI Button */}
               <Button
                 variant="outlined"
@@ -52,6 +50,9 @@ const DeveloperSettings = () => {
               >
                 {showToken ? 'Hide' : 'Show'}
               </Button>
+              <code className="token-text">
+                {showToken ? token : '••••••••••••••••••••••••••••••••••••••••••'}
+              </code>
             </div>
             {/* Copy token – MUI Button */}
             <Button
@@ -66,6 +67,7 @@ const DeveloperSettings = () => {
           </div>
         )}
       </div>
+          <QuickStart />
     </div>
   );
 };

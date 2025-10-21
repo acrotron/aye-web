@@ -96,6 +96,7 @@ export class HuggingfaceService {
         chat_id: chatId,
         user_input: userInput
       });
+
       return response.data;
     } catch (error) {
       console.error('Error calling Lambda API:', error);

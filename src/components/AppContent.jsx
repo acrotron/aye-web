@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useChatContext } from "../context/ChatContext";
 
 import NavPane from "./NavPane/NavPane";
@@ -8,7 +8,18 @@ import ResizeHandle from "./ResizeHandle/ResizeHandle";
 import ChatSessionSettingsDrawer from "./ChatSessionSettingsDrawer/ChatSessionSettingsDrawer";
 
 const AppContent = ({ title, resizablePanes, user, signOut }) => {
-  const { showSettings, setShowSettings, activeSettingsSection } = useChatContext();
+  const { showSettings, setShowSettings, activeSettingsSection, setOpenSettingsOnNoToken, setActiveSettingsSection } = useChatContext();
+
+  // Inject the drawer opener once the provider is ready
+  useEffect(() => {
+    setOpenSettingsOnNoToken(() => (data) => {
+      // Only open the Developer Settings if has_token is false and no specific chat session is loaded
+      if (data.has_token === false) {
+        setActiveSettingsSection('developer'); // open on Developer tab
+        setShowSettings(true);
+      }
+    });
+  }, [setOpenSettingsOnNoToken, setShowSettings, setActiveSettingsSection]);
 
   return (
     <div className={`app-container ${resizablePanes.isResizing ? "resizing" : ""}`}>

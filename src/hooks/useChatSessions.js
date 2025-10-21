@@ -8,14 +8,28 @@ export const useChatSessions = (chatService, currentUserId, systemPrompt) => {
   const [currentSessionId, setCurrentSessionId] = useState(null);
 
   // -----------------------------------------------------------------
+  // NEW – hook consumer can pass an optional callback that opens the
+  //      settings drawer on the "Developer" tab.
+  // -----------------------------------------------------------------
+  const [openSettingsOnNoToken, setOpenSettingsOnNoToken] = useState(null);
+  
+  // Store the API response data to check later when callback is set
+  const [apiResponseData, setApiResponseData] = useState(null);
+
+  // -----------------------------------------------------------------
   // Load **all** sessions from the backend (runs once on mount)
   // -----------------------------------------------------------------
   const loadChatSessionsFromBackend = useCallback(async () => {
     try {
-      const backend = await chatService.loadAllSessions(currentUserId);
-
+      // NEW – API now returns { has_token: boolean, chat_sessions: [...] }
+      const data = await chatService.loadAllSessions(currentUserId);
+      const rawSessions = data.chat_sessions ?? data; // fallback for legacy list
+      
+      // Store the API response for later use
+      setApiResponseData(data);
+      
       // Transform rows → UI shape
-      const sessions = backend.map((s) => ({
+      const sessions = rawSessions.map((s) => ({
         id: s.chat_id,
         name: s.chat_title,
         messages: [],
@@ -26,19 +40,19 @@ export const useChatSessions = (chatService, currentUserId, systemPrompt) => {
         // Preserve any system prompt / model that may already be present
         // (mostly relevant when we later load individual sessions)
       }));
-
+      
       // Order newest first (most recent `lastUpdated` first)
       sessions.sort((a, b) => {
         const aMs = new Date(a.lastUpdated).getTime();
         const bMs = new Date(b.lastUpdated).getTime();
         return bMs - aMs;
       });
-
+      
       if (sessions.length > 0) {
         setChatSessions(sessions);
         setCurrentSessionId(sessions[0].id); // newest becomes active
       } else {
-        // No saved sessions → create a fresh “New Chat”
+        // No saved sessions → create a fresh "New Chat"
         createNewChat(); // this also setsCurrentSessionId(-1)
       }
     } catch (error) {
@@ -47,6 +61,19 @@ export const useChatSessions = (chatService, currentUserId, systemPrompt) => {
       createNewChat();
     }
   }, [chatService, currentUserId, systemPrompt]);
+
+  // -----------------------------------------------------------------
+  // NEW – Effect to handle opening settings when callback is set
+  // -----------------------------------------------------------------
+  useEffect(() => {
+    // Check if we have both the callback and the API data
+    if (openSettingsOnNoToken && apiResponseData && apiResponseData.has_token === false) {
+      // Open the settings drawer
+      openSettingsOnNoToken(apiResponseData);
+      // Clear the data so we don't re-trigger
+      setApiResponseData(null);
+    }
+  }, [openSettingsOnNoToken, apiResponseData]);
 
   // -----------------------------------------------------------------
   // CREATE a brand‑new empty chat (used when no rows exist or on error)
@@ -143,7 +170,8 @@ export const useChatSessions = (chatService, currentUserId, systemPrompt) => {
         if (currentSessionId === sessionId) {
           if (filtered.length > 0) {
             setCurrentSessionId(filtered[0].id);
-          } else {
+          }
+          else {
             // Nothing left – create a fresh empty chat
             createNewChat();
           }
@@ -164,7 +192,7 @@ export const useChatSessions = (chatService, currentUserId, systemPrompt) => {
           if (s.id === currentSessionId || (s.id === -1 && currentSessionId === -1)) {
             const updated = { ...s };
 
-            // Replace the temporary “New Chat” (-1) with the real ids.
+            // Replace the temporary "New Chat" (-1) with the real ids.
             if (s.id === -1) {
               updated.id = resp.chat_id;
               updated.name = resp.chat_title;
@@ -202,7 +230,7 @@ export const useChatSessions = (chatService, currentUserId, systemPrompt) => {
   );
 
   // -----------------------------------------------------------------
-  // Optimistic “touch” – bump a session's `lastUpdated` and re‑sort
+  // Optimistic "touch" – bump a session's `lastUpdated` and re‑sort
   // -----------------------------------------------------------------
   const touchSession = useCallback((sessionId) => {
     const nowIso = new Date().toISOString();
@@ -253,6 +281,8 @@ export const useChatSessions = (chatService, currentUserId, systemPrompt) => {
     setChatSessions,
     /** Optimistic UI helper */
     touchSession,
+    /** NEW – let parent pass the drawer opener callback */
+    setOpenSettingsOnNoToken,
   };
 };
 
