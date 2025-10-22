@@ -11,7 +11,6 @@ import { HuggingfaceService } from "./services/huggingface.service";
 import { useResizablePanes } from "./hooks/useResizablePanes";
 import AppContent from "./components/AppContent";
 import LogonScreen from "./components/Logon/LogonScreen";
-import Welcome from "./components/Welcome/Welcome"; // <-- new import
 
 import "./app.css";
 
@@ -100,8 +99,8 @@ function App() {
     // Authenticator.Provider supplies the auth context without rendering the default UI.
     <Authenticator.Provider>
       <Routes>
-        {/* Public route – no auth required */}
-        <Route path="/welcome" element={<Welcome />} />
+        {/* SAMPLE! Public route – no auth required 
+        <Route path="/welcome" element={<Welcome />} /> */}
         {/* All other routes go through AuthGate */}
         <Route path="/*" element={<AuthGate title={title} resizablePanes={resizablePanes} />} />
       </Routes>
