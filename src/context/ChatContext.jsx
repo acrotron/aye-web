@@ -156,7 +156,9 @@ Keep the tone professional and neutral and to the point.`;
     showSettings,
     setShowSettings,
     activeSettingsSection,
-    setActiveSettingsSection
+    setActiveSettingsSection,
+    // ➜ forward the hook's setter so consumers can inject the drawer opener
+    setOpenSettingsOnNoToken: chatSessions.setOpenSettingsOnNoToken,
   };
 
   return (

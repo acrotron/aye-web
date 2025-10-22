@@ -10,7 +10,7 @@ export class HuggingfaceService {
     this.hfToken = environment.hfToken || 'your-huggingface-token';
 
     this.pollIntervalMs = 2000;               // 2s
-    this.pollTimeoutMs  = 120000;             // 2 min
+    this.pollTimeoutMs  = 180000;             // 2 min
   }
 
   async callInvoke(userId, chatId, userInput, model = 'gpt-4o', systemPrompt = null) {
@@ -96,6 +96,7 @@ export class HuggingfaceService {
         chat_id: chatId,
         user_input: userInput
       });
+
       return response.data;
     } catch (error) {
       console.error('Error calling Lambda API:', error);

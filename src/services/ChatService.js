@@ -14,7 +14,8 @@ export class ChatService {
 
   async loadSession(userId, chatId) {
     try {
-      const [session] = await this.hfService.loadChatSessions(userId, chatId);
+      const data = await this.hfService.loadChatSessions(userId, chatId);
+      const [session] = data.chat_sessions;
       return session;
     } catch (error) {
       console.error('Failed to load chat session:', error);

@@ -1,0 +1,110 @@
+/*
+  IMPROVEMENT: Aligned styles with the main web application theme.
+  - Background is now #2b2b2b to match the web client.
+  - Font stack is now the standard system UI font, matching app.css.
+  - Colors for borders, code blocks, and links are sourced from app.css variables.
+*/
+
+.quick-start-section {
+  max-width: 56rem; /* 896px */
+  margin: 1.5rem auto 0 auto; /* Adjusted top margin to be closer to the token box */
+  padding: 1.5rem; /* Adjusted padding to match token box */
+  text-align: left; /* Override parent's center-align for better readability */
+  background-color: var(--bg-paper); /* Use theme variable for background */
+  border-radius: 8px; /* Match token box border-radius */
+  border: 1px solid #e9ecef; /* Match token box border color */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Match token box shadow */
+  color: var(--text-primary); /* Default text color */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+}
+
+.quick-start-section h3 {
+  text-align: left; /* Align heading left to match token box title */
+  color: var(--text-primary); /* Use theme variable for title color */
+  font-size: 1.25rem; /* Match token box title font size */
+  font-weight: 600; /* Match token box title font weight */
+  margin-bottom: 1rem; /* Adjusted margin */
+}
+
+.step-list {
+  list-style: none;
+  padding-left: 0;
+  counter-reset: step-counter;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Adjusted gap */
+}
+
+.step-list li {
+  position: relative;
+  padding-left: 2.5rem; /* Adjusted padding for the number circle */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 2rem; /* Adjusted min-height */
+}
+
+/* The styled step number, using colors from app.css */
+.step-list li::before {
+  content: counter(step-counter);
+  counter-increment: step-counter;
+  position: absolute;
+  left: 0;
+  top: 0; /* Align with the top of the step title */
+  transform: none; /* Remove vertical centering */
+  font-size: 0.9rem; /* Adjusted font size */
+  font-weight: 600;
+  color: var(--primary-bg); /* Use theme variable for color */
+  background-color: rgba(25, 118, 210, 0.1); /* Transparent primary blue */
+  border: 1px solid var(--primary-bg); /* Use theme variable for border */
+  border-radius: 50%;
+  width: 2rem; /* Adjusted width */
+  height: 2rem; /* Adjusted height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.step-title {
+  display: block;
+  font-weight: 500; /* Adjusted font weight */
+  margin-bottom: 0.25rem; /* Adjusted margin */
+  color: var(--text-primary); /* Use theme variable for title color */
+  font-size: 1rem; /* Adjusted font size */
+}
+
+.step-list pre {
+  background-color: #e9ecef; /* Light background for code blocks */
+  color: var(--text-primary); /* Command text color */
+  padding: 0.75rem; /* Adjusted padding */
+  border-radius: 4px; /* Adjusted border-radius */
+  overflow-x: auto;
+  border: 1px solid #ced4da; /* Light border for code blocks */
+  margin: 0;
+}
+
+/* Font is now inherited from .quick-start-section */
+.step-list code {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace; /* Monospace font */
+  font-size: 0.9rem; /* Adjusted font size */
+}
+
+.step-note {
+  margin-top: 0.5rem; /* Adjusted margin */
+  font-size: 0.85rem; /* Adjusted font size */
+  color: var(--text-secondary); /* Muted gray for notes */
+}
+
+/* Use primary blue from app.css for links */
+.step-note a {
+  color: var(--primary-bg); /* Use theme variable for link color */
+  text-decoration: none;
+  border-bottom: 1px dotted var(--primary-bg);
+  transition: color 0.2s, border-bottom-style 0.2s;
+}
+
+.step-note a:hover {
+  color: var(--primary-bg-hover); /* Lighter blue on hover */
+  border-bottom-style: solid;
+}
