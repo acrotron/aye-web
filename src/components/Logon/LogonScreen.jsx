@@ -124,19 +124,24 @@ const LogonScreen = () => {
     >
       <Card className="logon-card" elevation={3} sx={{ maxWidth: 400, width: "90%" }}>
         <CardContent>
-          <Typography variant="h4" component="h1" gutterBottom className="logon-title" sx={{ textAlign: "center" }}>
+          <Typography variant="h4" component="h1" gutterBottom className="logon-title" sx={{ textAlign: "center", whiteSpace: 'pre-line' }}>
             {isRegistering
               ? awaitingConfirmation
                 ? "Confirm your email"
                 : "Create your Aye Chat account"
-              : "Welcome to Aye Chat"}
+              : "Welcome to\n Aye Chat"}
           </Typography>
+          {!isRegistering && (
+            <Typography variant="body2" sx={{ textAlign: "center", color: "var(--text-secondary)", mb: 2, fontStyle: 'italic' }}>
+              A lightweight companion to your terminal client.
+            </Typography>
+          )}
           <Typography variant="subtitle1" gutterBottom className="logon-subtitle" sx={{ textAlign: "center", mb: 2 }}>
             {isRegistering
               ? awaitingConfirmation
                 ? "Enter the verification code sent to your email."
                 : "Enter your email and a password to register."
-              : "Sign in to continue and start chatting with Régine."}
+              : "Sign in to continue and start chatting."}
           </Typography>
 
           {error && (
